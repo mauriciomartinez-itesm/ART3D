@@ -3,16 +3,13 @@
 [Oo]bj/
 [Bb]uild/
 [Bb]uilds/
-Assets/3D Assets*
+[Pp]ackages/
 
+Assets/3D Assets*
 Assets/Samples*
 Assets/SamplesResources*
 Assets/StreamingAssets*
-
-Assets/Lean*
-
-Assets/LeanTween*
-
+Assets/Pkgs*
 
 # Visual Studio cache directory
 .vs/
@@ -36,7 +33,6 @@ ExportedObj/
 # Unity3D generated meta files
 *.pidb.meta
 *.pdb.meta
-*.meta
 
 # Unity3D Generated File On Crash Reports
 sysinfo.txt
