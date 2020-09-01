@@ -9,5 +9,7 @@ EditorBuildSettings:
     path: Assets/Main_Page.unity
     guid: 34bfc69daae4d4d129dbd32b13d274d8
   m_configObjects:
+    com.unity.xr.arcore.PlayerSettings: {fileID: 11400000, guid: ed339fb63a4d19e4daef0675a396c09b,
+      type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: cde96a22fa7a54fd09e6a6edaf5211cc,
       type: 2}
