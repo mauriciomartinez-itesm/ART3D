@@ -14,12 +14,12 @@ public class TogglePartsKeyboard : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        for (int index = 0; index < asset.partes.Count; index++)
+        for (int index = 0; index < asset.parts.Count; index++)
         {
             if (Input.GetKeyDown(KeyCode.Alpha0 + index + 1))
             {
-                Debug.Log("Toggle Part: " + asset.partes[index].Item1);
-                asset.partes[index].Item2.SetActive(!asset.partes[index].Item2.activeInHierarchy);
+                Debug.Log("Toggle Part: " + asset.parts[index].Item1);
+                asset.parts[index].Item2.SetActive(!asset.parts[index].Item2.activeInHierarchy);
             }
         }
     }

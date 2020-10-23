@@ -4,6 +4,10 @@ using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 
+/*
+ * Es el responsable del raycast que proyecta el cursor. El cursor es el hijo
+ * del objeto que tiene este script.
+ */
 public class PlacementIndicator : MonoBehaviour
 {
     private ARRaycastManager rayManager;
