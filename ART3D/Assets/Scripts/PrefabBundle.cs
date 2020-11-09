@@ -42,11 +42,12 @@ public class PrefabBundle : MonoBehaviour
 
         // Si no esta mostrando ningun modelo automaticamente muestra el primer
         // prefabricado del assetBundle
-        if (this.transform.childCount == 0)
+        if (this.transform.childCount == 1)
         {
             InstantiateObjectFromBundle(0);
             index = (index + 1) % (_bundleLoader.myAssetBundles[id].GetAllAssetNames().Length);
         }
+
     }
 
     // Como los assetbundles pueden tener mas de 1 modelo, esta funcion muestra
@@ -85,9 +86,10 @@ public class PrefabBundle : MonoBehaviour
             model.transform.localScale=new Vector3(0.4f,0.4f,0.4f);
             model.AddComponent<RotateAxis>();
             model.AddComponent<LeanPinchScale>();
+            model.AddComponent<OnObjectClick>();
 
             parts = new List<Tuple<string, GameObject>>();
-            getPartsRecursive(model);
+            getPartsRecursiveAndAddColliders(model);
 
             return true;
         }
@@ -97,6 +99,8 @@ public class PrefabBundle : MonoBehaviour
             return false;
         }
     }
+
+
 
     public bool InstantiateObjectFromBundle(int assetIndex)
     {
@@ -121,16 +125,45 @@ public class PrefabBundle : MonoBehaviour
         }
     }
 
-    void getPartsRecursive(GameObject gameObject)
+    void getPartsRecursiveAndAddColliders(GameObject gameObject)
     {
 
         if (containsMesh(gameObject))
         {
             parts.Add(new Tuple<string, GameObject>(gameObject.transform.name, gameObject));
+
+            Vector3 partCenter  = gameObject.GetComponent<MeshRenderer>().bounds.center;
+            Vector3 partSize    = gameObject.GetComponent<MeshRenderer>().bounds.size;
+            Vector3 denominator = new Vector3(1,1,1);
+
+            Transform tempTransform = model.transform;
+
+            while(tempTransform != null)
+            {
+                denominator.x *= tempTransform.localScale.x;
+                denominator.y *= tempTransform.localScale.y;
+                denominator.z *= tempTransform.localScale.z;
+                tempTransform = tempTransform.parent;
+            }
+
+            partSize.x /= denominator.x;
+            partSize.y /= denominator.y;
+            partSize.z /= denominator.z;
+
+            partCenter -= model.transform.position;
+            partCenter.x /= denominator.x;
+            partCenter.y /= denominator.y;
+            partCenter.z /= denominator.z;
+
+
+            BoxCollider tempBox = model.AddComponent<BoxCollider>();
+            tempBox.size = partSize;
+            tempBox.center = partCenter;
+
         }
 
         for (int hijo = 0; hijo < gameObject.transform.childCount; hijo++)
-            getPartsRecursive(gameObject.transform.GetChild(hijo).gameObject);
+            getPartsRecursiveAndAddColliders(gameObject.transform.GetChild(hijo).gameObject);
 
     }
 

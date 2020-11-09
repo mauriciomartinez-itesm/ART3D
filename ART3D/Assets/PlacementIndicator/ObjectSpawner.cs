@@ -29,14 +29,23 @@ public class ObjectSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (canSapwnObject && Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Began)
+        if (canSapwnObject  && Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Began)
         {
-            debuglog.text += "Start. Se detecto el click.\n";
-            GameObject obj = Instantiate(objectSpawn, placementIndicator.transform.position, placementIndicator.transform.rotation);
-            obj.GetComponent<PrefabBundle>().id = _bundleLoader.lastId;
-            canSapwnObject = false;
-            debuglog.text += "END. Se detecto el click.\n";
+            if(_bundleLoader.lastId != "")
+            {
+                debuglog.text += "Start. Se detecto el click.\n";
+                GameObject obj = Instantiate(objectSpawn, placementIndicator.transform.position, placementIndicator.transform.rotation);
+                obj.GetComponent<PrefabBundle>().id = _bundleLoader.lastId;
+                canSapwnObject = false;
+                Focus.focusObject(obj);
+                debuglog.text += "END. Se detecto el click.\n";
+            }
+            else
+            {
+                debuglog.text += "El modelo no se puede colocar porque el assetBundle esta vacio.\n";
+            }
         }
+
     }
 
 }

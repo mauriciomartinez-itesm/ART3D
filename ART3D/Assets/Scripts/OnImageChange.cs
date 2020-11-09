@@ -62,13 +62,15 @@ public class OnImageChange : MonoBehaviour
                         debuglog.text += $"SI se detecto la imagen. Child Count: {trackedImage.transform.childCount}\n";
                         trackedImage.GetComponent<PrefabBundle>().id = trackedImage.referenceImage.name;
                         _bundleLoader.DownloadAssetBundleFromFirebase(trackedImage.referenceImage.name);
-                        trackedImage.transform.GetChild(0).gameObject.SetActive(true);
+                        trackedImage.transform.GetChild(0).gameObject.SetActive(true);                        
                         debuglog.text += $"Se completa el asociamiento del prefabbundle al asset bundle\n";
                     }
                     catch(Exception ex)
                     {
                         debuglog.text += $"Error en la asociacion al assetbundle: {ex.Message}\n";
-                    }                    
+                    }
+
+                    Focus.focusObject(trackedImage.gameObject);
                 }               
             }
         }

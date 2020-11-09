@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 /*
  * Gira el objeto en el eje inidcado en 'Axis' (default eje Y) al arrastrar
@@ -41,4 +42,6 @@ public class RotateAxis : MonoBehaviour
 		else
 			lastPositionX = -1;
 	}
+
+
 }

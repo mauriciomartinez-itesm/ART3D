@@ -10,6 +10,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
+using Firebase.Storage;
 
 /* 
  * Esta clase se encarga de construir el conjunto/libreria de targets para
@@ -25,6 +26,7 @@ public class SetTargets : MonoBehaviour
     public Text debugLog;
     public XRReferenceImageLibrary runtimeImageLibrary;
     public GameObject prefabOnTrack;
+    private FirebaseStorage storage;
 
 
     async void Start()
@@ -34,6 +36,7 @@ public class SetTargets : MonoBehaviour
         try
         {
             debugLog.text += "Starting to set targets\n";
+            storage = FirebaseStorage.DefaultInstance;
             List<string> ids = new List<string>(){ "na201WeCoKxZxqwnVjEa" };
             await DownloadAndAddTargetsFromFirebase(ids);
         }
@@ -55,6 +58,7 @@ public class SetTargets : MonoBehaviour
         foreach (var id in ids)
         {
             string link = await getFileUrlFromFirebase(id);
+            
             if (link != "")
             {
                 links.Add(link);
@@ -120,13 +124,13 @@ public class SetTargets : MonoBehaviour
                     Task.Delay(100).Wait();
                 }
 
-                debugLog.text += $"Job Completed ({mutableRuntimeReferenceImageLibrary.count})\n";
-                debugLog.text += $"Supported Texture Count ({mutableRuntimeReferenceImageLibrary.supportedTextureFormatCount})\n";
-                debugLog.text += $"trackImageManager.trackables.count ({trackImageManager.trackables.count})\n";
-                debugLog.text += $"trackImageManager.trackedImagePrefab.name ({trackImageManager.trackedImagePrefab.name})\n";
-                debugLog.text += $"trackImageManager.maxNumberOfMovingImages ({trackImageManager.maxNumberOfMovingImages})\n";
-                debugLog.text += $"trackImageManager.supportsMutableLibrary ({trackImageManager.subsystem.SubsystemDescriptor.supportsMutableLibrary})\n";
-                debugLog.text += $"trackImageManager.requiresPhysicalImageDimensions ({trackImageManager.subsystem.SubsystemDescriptor.requiresPhysicalImageDimensions})\n";
+                //debugLog.text += $"Job Completed ({mutableRuntimeReferenceImageLibrary.count})\n";
+                //debugLog.text += $"Supported Texture Count ({mutableRuntimeReferenceImageLibrary.supportedTextureFormatCount})\n";
+                //debugLog.text += $"trackImageManager.trackables.count ({trackImageManager.trackables.count})\n";
+                //debugLog.text += $"trackImageManager.trackedImagePrefab.name ({trackImageManager.trackedImagePrefab.name})\n";
+                //debugLog.text += $"trackImageManager.maxNumberOfMovingImages ({trackImageManager.maxNumberOfMovingImages})\n";
+                //debugLog.text += $"trackImageManager.supportsMutableLibrary ({trackImageManager.subsystem.SubsystemDescriptor.supportsMutableLibrary})\n";
+                //debugLog.text += $"trackImageManager.requiresPhysicalImageDimensions ({trackImageManager.subsystem.SubsystemDescriptor.requiresPhysicalImageDimensions})\n";
             }
         }
         catch (Exception e)
@@ -137,15 +141,18 @@ public class SetTargets : MonoBehaviour
 
 
     private async Task<string> getFileUrlFromFirebase(string id)
-    {
-        Firebase.Storage.FirebaseStorage storage = Firebase.Storage.FirebaseStorage.DefaultInstance;
-        Firebase.Storage.StorageReference storage_ref = storage.GetReferenceFromUrl("gs://art3d-e7c95.appspot.com/Target/" + id + ".jpg");
+    {     
+        StorageReference storage_ref = storage.GetReferenceFromUrl("gs://art3d-e7c95.appspot.com/targets/" + id + ".jpg");
 
         string link = "";
         await storage_ref.GetDownloadUrlAsync().ContinueWith((Task<Uri> task) => {
             if (!task.IsFaulted && !task.IsCanceled)
             {
                 link = task.Result.ToString();
+            }
+            else
+            {
+                debugLog.text += $"Failed to load link. Task Faulted: {task.IsFaulted}\n";
             }
         });
 

@@ -29,7 +29,7 @@ public class LoadBundle : MonoBehaviour
     private int maxCacheAssetBundles = 5;
 
     [HideInInspector]
-    public string lastId;
+    public string lastId = "";
 
     [Tooltip("La direccion en la cual se encuentra el archivo AssetBundle, si se obtendra de internet debe de ser un url directo al archivo.")]
     public string pathForLoadOnStart;
@@ -87,15 +87,19 @@ public class LoadBundle : MonoBehaviour
             {
                 StartCoroutine(DownloadAssetBundleFromUrl(link, id));
             }
-            debuglog.text += "Finish downloading asset bundle\n";
+            else
+            {
+                debuglog.text += "Error getting firebase link\n";
+            }
+            
         }
         catch (Exception ex)
         {
             debuglog.text += $"Error en la descarga del asset bundle: {ex.Message}\n";
         }
-        }
+    }
 
-    public void LoadAssetBundle(string bundleUrl, string id)
+    private void LoadAssetBundle(string bundleUrl, string id)
     {
         myAssetBundles.Add(id , AssetBundle.LoadFromFile(bundleUrl));
         Debug.Log(myAssetBundles[id] == null ? " Failed to load asset bundle " : " Asset bundle succesfully Loaded");
@@ -107,7 +111,6 @@ public class LoadBundle : MonoBehaviour
 
         using (UnityWebRequest uwr = UnityWebRequestAssetBundle.GetAssetBundle(bundleUrl))
         {
-            debuglog.text += $"Celes best girl\n";
             yield return uwr.SendWebRequest();
             
             if (uwr.isNetworkError || uwr.isHttpError)
@@ -119,6 +122,7 @@ public class LoadBundle : MonoBehaviour
                 // Añade el Asset bundle al diccionario para accesarlo desde el prefabBundle
                 debuglog.text += $"Before dic add\n";
                 myAssetBundles.Add(id, DownloadHandlerAssetBundle.GetContent(uwr));
+                //myAssetBundles[id].
                 debuglog.text += $"After dic add\n";
                 registry.Enqueue(id);
                 lastId = id;
@@ -131,13 +135,13 @@ public class LoadBundle : MonoBehaviour
         }
 
         Debug.Log(myAssetBundles[id] == null ? " Failed to load asset bundle " : " Asset bundle succesfully Loaded");
-        debuglog.text += myAssetBundles[id] == null ? " Failed to load asset bundle \n" : " Asset bundle succesfully Loaded\n";
+        debuglog.text += myAssetBundles[id] == null ? " Failed to load asset bundle \n" : " Finish downloading asset bundle\n";
     }
 
 
     private async Task<string> getFileUrlFromFirebase(string id)
     {
-        StorageReference storage_ref = _firebasestorage.GetReferenceFromUrl("gs://art3d-e7c95.appspot.com/AssetBundles/" + id );//na201WeCoKxZxqwnVjEg");
+        StorageReference storage_ref = _firebasestorage.GetReferenceFromUrl("gs://art3d-e7c95.appspot.com/assets/" + id );
 
         string link = "";
         await storage_ref.GetDownloadUrlAsync().ContinueWith((Task<Uri> task) => {
