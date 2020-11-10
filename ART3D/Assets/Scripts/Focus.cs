@@ -5,17 +5,18 @@ using UnityEngine;
 
 public class Focus : MonoBehaviour
 {
-    private static GameObject onFocus=null;
+    [HideInInspector]
+    public static GameObject onFocus=null;
 
     public static void focusObject(GameObject obj)
     {
         // Si ya habia un modelo enfocado lo desenfoca bloqueando
-        // sus habilidades de rotar y escalar.
+        // sus habilidades de rotar y escalar y desactiva sus iconos.
         if(onFocus!=null)
         {
             try
             {
-                onFocus.transform.GetChild(0).gameObject.SetActive(false);
+                onFocus.transform.GetChild(0).gameObject.SetActive(false); // Desactivacion de iconos
                 onFocus.GetComponentInChildren<RotateAxis>().enabled = false;
                 onFocus.GetComponentInChildren<LeanPinchScale>().enabled = false;                
             }
@@ -45,7 +46,7 @@ public class Focus : MonoBehaviour
 
         try
         {
-            // Trata de enfocar el modelo habilitando la rotacion y la escala,
+            // Trata de enfocar el modelo habilitando la rotacion y la escala y activa sus iconos,
             // esto solo funciona si el modelo ya existia.
             onFocus.GetComponentInChildren<RotateAxis>().enabled = true;
             onFocus.GetComponentInChildren<LeanPinchScale>().enabled = true;

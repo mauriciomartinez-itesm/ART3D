@@ -26,10 +26,4 @@ public class DropdownId : MonoBehaviour
         int index = dropdown.value;
         _bundleLoader.DownloadAssetBundleFromFirebase(dropdown.options[index].text);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

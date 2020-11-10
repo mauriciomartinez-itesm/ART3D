@@ -36,6 +36,7 @@ public class ObjectSpawner : MonoBehaviour
                 debuglog.text += "Start. Se detecto el click.\n";
                 GameObject obj = Instantiate(objectSpawn, placementIndicator.transform.position, placementIndicator.transform.rotation);
                 obj.GetComponent<PrefabBundle>().id = _bundleLoader.lastId;
+                obj.tag = "model";
                 canSapwnObject = false;
                 Focus.focusObject(obj);
                 debuglog.text += "END. Se detecto el click.\n";
