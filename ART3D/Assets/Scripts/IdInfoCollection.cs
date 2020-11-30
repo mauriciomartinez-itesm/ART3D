@@ -5,6 +5,14 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Networking;
 
+/* 
+ * Obtiene de Firebase un json con la informacion de los modelos existentes.
+ * Deserializa el json utilizando la funcion Deserialize de la clase AssetManager que
+ * recorre el json creando 1 sub-json por cada modelo, los cuales son deserealizados a las clases
+ * AssetInfo y Solicitor para guardarlos en el diccionario 'assets' cuya llave es el id
+ * y su valor es la informacion del modelo.
+ */
+
 public class IdInfoCollection : MonoBehaviour
 {
     public UnityEvent OnIdLoadingDone = new UnityEvent();
@@ -16,6 +24,7 @@ public class IdInfoCollection : MonoBehaviour
         StartCoroutine(Get("https://art3d-e7c95.firebaseio.com/assets.json"));
     }
 
+    // Obtiene el json y lo deserealiza con la funcion Deserialize
     IEnumerator Get(string url)
     {
         var request = new UnityWebRequest(url);
@@ -50,6 +59,7 @@ public class AssetManager
 
     public void Deserialize(string completeJson)
     {
+        // Processo de extraccion de mini json y deserealizacion
         string id = "";
         string miniJson = "";
         int p1 = 0, p2 = 0, index = 0;
@@ -111,17 +121,4 @@ public class Solicitor
     public string name = "";
     public string role = "";
     public string subject = "";
-}
-
-[Serializable]
-public class PackSender
-{
-    public float tableSize;
-    public int tableNumber;
-    public float threshold;
-    public float distance;
-    public string walkingPath;
-    public string polygonName;
-    public float scaleX;
-    public float scaleY;
 }

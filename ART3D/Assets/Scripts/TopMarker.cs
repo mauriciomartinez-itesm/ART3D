@@ -2,15 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * Modifica la rotacion del icono/marcador sueprior que señala a un objeto enfocado.
+ * Este icono siempre debe de estar perpendicular a la camara en el eje y.
+ */
+
 public class TopMarker : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
         Vector3 targetVector = Camera.main.transform.position - transform.position;

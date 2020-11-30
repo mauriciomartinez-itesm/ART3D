@@ -20,7 +20,10 @@ public class Eraser : MonoBehaviour
         try
         {
             GameObject model = Focus.onFocus;
-            Destroy(model);
+            // Solo se pueden borrar los modelos con tag "model" para evitar que el usuario borre los modelos provinientes de los
+            // marcadores/targets.
+            if (model.transform.tag == "model") 
+                Destroy(model);
         }
         catch (Exception ex)
         {

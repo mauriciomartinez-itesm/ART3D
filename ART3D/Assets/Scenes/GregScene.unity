@@ -1503,6 +1503,15 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 766591350, guid: b46b13e0aaf256f4da626792fe7568cf, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2314652181018412292, guid: b46b13e0aaf256f4da626792fe7568cf,
+        type: 3}
+      propertyPath: id
+      value: Test
+      objectReference: {fileID: 0}
     - target: {fileID: 2314652181018412293, guid: b46b13e0aaf256f4da626792fe7568cf,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3393,7 +3402,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lastId: 
-  pathForLoadOnStart: https://drive.google.com/uc?export=download&id=17oB39uXstjfJGjV_tnoIE32z_nU-94Uq
+  pathForLoadOnStart: 'https://drive.google.com/uc?export=download&id=1Z_Z1PRMxc5H1A0b0JBbHRTB7Xsa687ef '
   webService: 1
   loadOnStart: 0
   debuglog: {fileID: 1566272863}

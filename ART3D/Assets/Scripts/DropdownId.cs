@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/*
+ * Recorre la colleccion de ids obtenidos de firebase (IdInfoCollection._assetManager.assets)
+ * y añade cada id al drop down. Define la funcion DropdownIdSelected que se encarga de descargar
+ * el id seleccionado en el dropdown a traves del _bundleLoader y su funcion DownloadAssetBundleFromFirebase.
+ */
+ 
 public class DropdownId : MonoBehaviour
 {
     public LoadBundle _bundleLoader;

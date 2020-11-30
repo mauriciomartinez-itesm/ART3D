@@ -2,16 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/* 
+ * Es una clase prueba para demostrar que las partes de los modelos pueden
+ * ser desplegadas a voluntad.
+ */
+
 public class TogglePartsKeyboard : MonoBehaviour
 {
     public PrefabBundle asset;
-    // Start is called before the first frame update
-    void Start()
-    {
 
-    }
-
-    // Update is called once per frame
     void Update()
     {
         for (int index = 0; index < asset.parts.Count; index++)

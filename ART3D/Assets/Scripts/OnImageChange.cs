@@ -13,7 +13,8 @@ using System;
  * la cual valida si se esta viendo alguna imagen. Si hay una imagen a la vista, se
  * utiliza el nombre (id) de la imagen detectada para carga el assetbundle y pone
  * visible el modelo. Si no hay una imagen a la vista se hace invisible el modelo.
- * Si el assetbundle ya esta en cache no lo descarga de firebase.
+ * Si el assetbundle ya esta en cache no lo descarga de firebase (Esta logica esta embebida
+ * en el script LoadBundle).
  */
 
 public class OnImageChange : MonoBehaviour
@@ -21,6 +22,9 @@ public class OnImageChange : MonoBehaviour
     public Text debuglog;
     private LoadBundle _bundleLoader;
     private ARTrackedImageManager _arTrackedImageManager;
+    private bool FirstPass = false; // Se asegura que solo se ejecute 1 vez el bloque de codigo mientras se esta viendo la imagen.
+    private int childIndexModel = 1;
+    private int childIndexMarkers = 0;
 
     private void Awake()
     {
@@ -45,33 +49,44 @@ public class OnImageChange : MonoBehaviour
             // La imagen no esta visible para la camara
             if (trackedImage.trackingState != UnityEngine.XR.ARSubsystems.TrackingState.Tracking)
             {
-                if (trackedImage.transform.GetChild(0).gameObject.activeSelf)
+                if (trackedImage.transform.childCount > 1 && trackedImage.transform.GetChild(childIndexModel).gameObject.activeSelf)
                 {
                     debuglog.text += $"NO se ve la imagen con id: {trackedImage.referenceImage.name}\n";
-                    trackedImage.transform.GetChild(0).gameObject.SetActive(false);
+                    trackedImage.transform.GetChild(childIndexMarkers).gameObject.SetActive(false);
+                    trackedImage.transform.GetChild(childIndexModel).gameObject.SetActive(false);
+                    //Focus.onFocus = null;
+                    FirstPass = false;
                 }
             }
             // La imagen si esta visible para la camara
             else
             {
-                if (trackedImage.GetComponent<PrefabBundle>().id=="" || !trackedImage.transform.GetChild(0).gameObject.activeSelf)
+                if (!FirstPass)
                 {
                     // Usa el nombre (id) de la imagen para cargar el assetbundle de firebase
                     try
                     {
                         debuglog.text += $"SI se detecto la imagen. Child Count: {trackedImage.transform.childCount}\n";
-                        trackedImage.GetComponent<PrefabBundle>().id = trackedImage.referenceImage.name;
+                        
                         _bundleLoader.DownloadAssetBundleFromFirebase(trackedImage.referenceImage.name);
-                        trackedImage.transform.GetChild(0).gameObject.SetActive(true);                        
+
+                        // El modelo se enfoca por primera vez dentro del Script PrefabBundle cuando se termina de instanciar
+                        trackedImage.GetComponent<PrefabBundle>().id = trackedImage.referenceImage.name;
+                        FirstPass = true;
+                        
+                        if(trackedImage.transform.childCount > 1)
+                        {
+                            trackedImage.transform.GetChild(childIndexModel).gameObject.SetActive(true);
+                            Focus.focusObject(trackedImage.gameObject);
+                        }
+                        debuglog.text += $"rotacion de la imagen x:{trackedImage.transform.eulerAngles.x} y:{trackedImage.transform.eulerAngles.y} z:{trackedImage.transform.eulerAngles.z}\n";
                         debuglog.text += $"Se completa el asociamiento del prefabbundle al asset bundle\n";
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         debuglog.text += $"Error en la asociacion al assetbundle: {ex.Message}\n";
                     }
-
-                    Focus.focusObject(trackedImage.gameObject);
-                }               
+                }
             }
         }
     }

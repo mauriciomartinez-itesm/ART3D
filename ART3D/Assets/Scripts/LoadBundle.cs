@@ -14,8 +14,10 @@ using UnityEngine.UI;
  * la liga directa al AssetBundle y un id unico. Tambien se puede descargar de FirebaseStorage
  * usando la funcion DownloadAssetBundleFromFirebase cuyo parametro es el id del assetbundle
  * que se desea descargar.
+ * La cantidad maxima de Asset Bundles que pueden estar cargados en memoria esta definida en la variable
+ * maxCacheAssetBundles. Cuando hay mas asset bundles se elimina de memoria el assetbundle mas viejo.
  * ADVERTENCIA: Tratar de cargar 2 veces el mismo assetbundle crea un error si no se ha eiminado de
- * memoria (solo puede haver un assetbundle unico a la vez). Si se puede tener N assetbundles pero
+ * memoria (solo puede haber un assetbundle unico a la vez). Si se puede tener N assetbundles pero
  * tienen que ser diferentes.
  */
 
@@ -120,22 +122,29 @@ public class LoadBundle : MonoBehaviour
             else
             {
                 // Añade el Asset bundle al diccionario para accesarlo desde el prefabBundle
-                debuglog.text += $"Before dic add\n";
-                myAssetBundles.Add(id, DownloadHandlerAssetBundle.GetContent(uwr));
-                //myAssetBundles[id].
-                debuglog.text += $"After dic add\n";
-                registry.Enqueue(id);
-                lastId = id;
-
-                if (registry.Count > maxCacheAssetBundles)
+                AssetBundle assetBundletemp = DownloadHandlerAssetBundle.GetContent(uwr);
+                debuglog.text += $"The name of the asset bundle is: {assetBundletemp}\n";
+                if(assetBundletemp!=null)
                 {
-                    removeAssetBundle(registry.Dequeue());
+                    myAssetBundles.Add(id, assetBundletemp);
+                    debuglog.text += $"Asset Bundle Added to the Dictionary\n";
+                    registry.Enqueue(id);
+                    lastId = id;
+
+                    if (registry.Count > maxCacheAssetBundles)
+                    {
+                        removeAssetBundle(registry.Dequeue());
+                    }
+
+                    debuglog.text += $"Finish Asset Bundle Process\n";
                 }
+                else
+                {
+                    debuglog.text += $"The downloaded asset bundle is empty, probably you are trying to load an already existing asset bundle but with a different id. Or the asset bundle file is not valid.\n";
+                }
+                
             }
         }
-
-        Debug.Log(myAssetBundles[id] == null ? " Failed to load asset bundle " : " Asset bundle succesfully Loaded");
-        debuglog.text += myAssetBundles[id] == null ? " Failed to load asset bundle \n" : " Finish downloading asset bundle\n";
     }
 
 

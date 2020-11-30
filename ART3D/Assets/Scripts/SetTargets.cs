@@ -31,13 +31,16 @@ public class SetTargets : MonoBehaviour
 
     async void Start()
     {
-        // ************ Esto es tempral para probar la carga de targets utilizando
-        // ************ una lista estatica de ids.
+        // Obtiene los ids de la colleccion de ids
         try
         {
             debugLog.text += "Starting to set targets\n";
             storage = FirebaseStorage.DefaultInstance;
-            List<string> ids = new List<string>(){ "na201WeCoKxZxqwnVjEa" };
+            List<string> ids = new List<string>();
+            foreach(var id in IdInfoCollection._assetManager.assets)
+            {
+                ids.Add(id.Key);
+            }
             await DownloadAndAddTargetsFromFirebase(ids);
         }
         catch (Exception ex)

@@ -10,13 +10,15 @@ using UnityEngine;
  * y ademas existe el assetbundle con ese id en el _bundleLoader.myAssetBundles.
  * Cuando carga un modelo le añade ciertos scripts para darle interaccion al objeto,
  * por ejemplo: rotacion y escalamiento. Ademas se guardan todas las partes visibles
- * del modelo en la lista de pares llamada parts.
+ * del modelo en la lista de partes llamada parts y se añade un box collider para cada
+ * parte.
  */
 public class PrefabBundle : MonoBehaviour
 {
     private LoadBundle _bundleLoader;
     private GameObject model = null;
-    private int index = 0;
+    private float high_y=int.MinValue, low_y=int.MaxValue;
+    private int model_index = 0;
     public string id = "";
 
     [HideInInspector]
@@ -45,7 +47,7 @@ public class PrefabBundle : MonoBehaviour
         if (this.transform.childCount == 1)
         {
             InstantiateObjectFromBundle(0);
-            index = (index + 1) % (_bundleLoader.myAssetBundles[id].GetAllAssetNames().Length);
+            model_index = (model_index + 1) % (_bundleLoader.myAssetBundles[id].GetAllAssetNames().Length);
         }
 
     }
@@ -56,8 +58,8 @@ public class PrefabBundle : MonoBehaviour
     {
         if (id != "" && _bundleLoader.myAssetBundles.ContainsKey(id))
         {
-            InstantiateObjectFromBundle(index);
-            index = (index + 1) % (_bundleLoader.myAssetBundles[id].GetAllAssetNames().Length);
+            InstantiateObjectFromBundle(model_index);
+            model_index = (model_index + 1) % (_bundleLoader.myAssetBundles[id].GetAllAssetNames().Length);
         }
     }
 
@@ -66,8 +68,8 @@ public class PrefabBundle : MonoBehaviour
     {
         if (id != "" && _bundleLoader.myAssetBundles.ContainsKey(id))
         {
-            InstantiateObjectFromBundle(index);
-            index = index == 0 ? (_bundleLoader.myAssetBundles[id].GetAllAssetNames().Length - 1) : index - 1;
+            InstantiateObjectFromBundle(model_index);
+            model_index = model_index == 0 ? (_bundleLoader.myAssetBundles[id].GetAllAssetNames().Length - 1) : model_index - 1;
         }
     }
 
@@ -83,13 +85,20 @@ public class PrefabBundle : MonoBehaviour
 
             deleteAssetGameObject();
             model = (GameObject)Instantiate(prefab, this.transform.position, Quaternion.identity, this.transform);
-            model.transform.localScale=new Vector3(0.4f,0.4f,0.4f);
             model.AddComponent<RotateAxis>();
             model.AddComponent<LeanPinchScale>();
             model.AddComponent<OnObjectClick>();
 
             parts = new List<Tuple<string, GameObject>>();
             getPartsRecursiveAndAddColliders(model);
+
+            // Modifica la escala del modelo para que todos los modelos empiezen con la
+            // misma altura.
+            float newScale = (high_y - low_y) * 0.5f / (high_y - low_y);
+            model.transform.localScale = new Vector3(newScale, newScale, newScale);
+
+            // Cuando todo el proceso de instanciado del modelo salio bien, se enfoca el modelo.
+            Focus.focusObject(this.gameObject);
 
             return true;
         }
@@ -132,6 +141,7 @@ public class PrefabBundle : MonoBehaviour
         {
             parts.Add(new Tuple<string, GameObject>(gameObject.transform.name, gameObject));
 
+            // Obtiene las medidas de cada render
             Vector3 partCenter  = gameObject.GetComponent<MeshRenderer>().bounds.center;
             Vector3 partSize    = gameObject.GetComponent<MeshRenderer>().bounds.size;
             Vector3 denominator = new Vector3(1,1,1);
@@ -155,11 +165,15 @@ public class PrefabBundle : MonoBehaviour
             partCenter.y /= denominator.y;
             partCenter.z /= denominator.z;
 
-
+            // Crea un box collider por cada pieza (cada redner)
             BoxCollider tempBox = model.AddComponent<BoxCollider>();
             tempBox.size = partSize;
             tempBox.center = partCenter;
 
+            // Informacion que sera utilizada para re-escalar el modelo
+            // para que todos sean de la misma altura.
+            high_y = Math.Max(high_y, partCenter.y + (partSize.y) / 2);
+            low_y = Math.Min(low_y, partCenter.y - (partSize.y) / 2);
         }
 
         for (int hijo = 0; hijo < gameObject.transform.childCount; hijo++)
