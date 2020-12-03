@@ -21,12 +21,13 @@ public class IdInfoCollection : MonoBehaviour
 
     void Start()
     {
-        StartCoroutine(Get("https://art3d-e7c95.firebaseio.com/assets.json"));
+        StartCoroutine(GetAndDeserialize("https://art3d-e7c95.firebaseio.com/assets.json"));
     }
 
     // Obtiene el json y lo deserealiza con la funcion Deserialize
-    IEnumerator Get(string url)
+    IEnumerator GetAndDeserialize(string url)
     {
+        // Parte que obtiene el Json
         var request = new UnityWebRequest(url);
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
 
@@ -36,9 +37,11 @@ public class IdInfoCollection : MonoBehaviour
 
         Debug.Log("Respuesta " + jsonResponse);
 
+        // Parte que deserializa el Json
         _assetManager = new AssetManager();
         _assetManager.Deserialize(jsonResponse);
 
+        // Imprime los ids obtenidos
         foreach (var el in _assetManager.assets)
         {
             Debug.Log($"Key: {el.Key} Created by: {el.Value.createdby} Description: {el.Value.desc}");
@@ -59,13 +62,16 @@ public class AssetManager
 
     public void Deserialize(string completeJson)
     {
-        // Processo de extraccion de mini json y deserealizacion
+        
         string id = "";
         string miniJson = "";
         int p1 = 0, p2 = 0, index = 0;
 
+        // Recorre el json completa extrayendo y deserealizando 1 mini-json 
+        // en cada iteracion
         while (p2 < completeJson.Length - 3)
         {
+            // Processo de extraccion de mini json
             p1 = completeJson.IndexOf('\"', p2);
             p2 = completeJson.IndexOf('\"', p1 + 1);
             id = completeJson.Substring(p1 + 1, p2 - p1 - 1);
@@ -87,6 +93,7 @@ public class AssetManager
             //Debug.Log($"The id {id}");
             //Debug.Log($"Our mini Json {miniJson}");
 
+            // Proceso de deserializacion del mini-json
             try
             {
                 AssetInfo info = JsonUtility.FromJson<AssetInfo>(miniJson);

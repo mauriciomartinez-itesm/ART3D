@@ -173,10 +173,12 @@ public class LoadBundle : MonoBehaviour
             debuglog.text += $"Destroying AssetBundle with id: {id}\n";
             myAssetBundles[id].Unload(true);
             myAssetBundles.Remove(id);
-            // Aqui se deben de borrar los prefabBundles que usaban el assetbundle
+            // Aqui se borran los prefabBundles que usaban el assetbundle
             // que se esta removiendo.
-            //PrefabBundle leftover = FindObjectOfType<PrefabBundle>().GetComponent<PrefabBundle>();
-            //leftover.deleteAssetGameObject();
+            var all_models = GameObject.FindGameObjectsWithTag("model");
+            foreach (var model in all_models)
+                if(model.GetComponent<PrefabBundle>().id == id)
+                    Destroy(model);
         }
         catch
         {

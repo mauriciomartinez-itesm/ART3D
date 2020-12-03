@@ -46,10 +46,4 @@ public class FirebaseInit : MonoBehaviour
             debugLog.text += $"Failed to init Firebase with error: {ex.Message}\n";
         }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

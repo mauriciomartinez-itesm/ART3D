@@ -54,7 +54,6 @@ public class OnImageChange : MonoBehaviour
                     debuglog.text += $"NO se ve la imagen con id: {trackedImage.referenceImage.name}\n";
                     trackedImage.transform.GetChild(childIndexMarkers).gameObject.SetActive(false);
                     trackedImage.transform.GetChild(childIndexModel).gameObject.SetActive(false);
-                    //Focus.onFocus = null;
                     FirstPass = false;
                 }
             }
@@ -72,14 +71,17 @@ public class OnImageChange : MonoBehaviour
 
                         // El modelo se enfoca por primera vez dentro del Script PrefabBundle cuando se termina de instanciar
                         trackedImage.GetComponent<PrefabBundle>().id = trackedImage.referenceImage.name;
+                        trackedImage.transform.GetChild(childIndexMarkers).eulerAngles = new Vector3(0, 0, 0); // Hace que los iconos de enfoque sean perpendiculares al piso
                         FirstPass = true;
                         
+                        // Si la cantidad de hijos es mayor a 1 significa que el modelo ya fue invocado y 
+                        // materializado en la escena, por lo cual se debe de mostrar y enfocar.
                         if(trackedImage.transform.childCount > 1)
                         {
                             trackedImage.transform.GetChild(childIndexModel).gameObject.SetActive(true);
+                            trackedImage.transform.GetChild(childIndexModel).eulerAngles = new Vector3(0, 0, 0); // Hace que el modelo sea perpendicular al piso
                             Focus.focusObject(trackedImage.gameObject);
                         }
-                        debuglog.text += $"rotacion de la imagen x:{trackedImage.transform.eulerAngles.x} y:{trackedImage.transform.eulerAngles.y} z:{trackedImage.transform.eulerAngles.z}\n";
                         debuglog.text += $"Se completa el asociamiento del prefabbundle al asset bundle\n";
                     }
                     catch (Exception ex)

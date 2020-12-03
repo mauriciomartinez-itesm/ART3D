@@ -56,7 +56,7 @@ public class Focus : MonoBehaviour
 
         try
         {
-            // Trata de enfocar el modelo habilitando la rotacion y la escala y activa sus iconos,
+            // Trata de enfocar el modelo habilitando la rotacion y la escala,
             // esto solo funciona si el modelo ya existia.
             onFocus.GetComponentInChildren<RotateAxis>().enabled = true;
             onFocus.GetComponentInChildren<LeanPinchScale>().enabled = true;
@@ -66,6 +66,8 @@ public class Focus : MonoBehaviour
             // Quiere decir que hubo un problema y probablemente el modelo todavia no era instanciado
             // por eso no encuentra el script RotateAxis y LeanPinchScale
         }
+
+        // Hace aparecer los iconos de enfoque
         onFocus.transform.GetChild(childIndexMarkers).gameObject.SetActive(true);
 
     }

@@ -9,15 +9,16 @@ using UnityEngine;
  * como sus hijos. Solo puede invocar estos modelos cuando su id no esta vacio
  * y ademas existe el assetbundle con ese id en el _bundleLoader.myAssetBundles.
  * Cuando carga un modelo le añade ciertos scripts para darle interaccion al objeto,
- * por ejemplo: rotacion y escalamiento. Ademas se guardan todas las partes visibles
- * del modelo en la lista de partes llamada parts y se añade un box collider para cada
- * parte.
+ * por ejemplo: rotacion y escalamiento. Los modelos son escalados automaticamente
+ * a una altura estandar, para que todos los modelos aparsecan de tamano similar.
+ * Ademas se guardan todas las partes visibles del modelo en la lista de partes llamada
+ *  parts y se añade un box collider para cada parte.
  */
 public class PrefabBundle : MonoBehaviour
 {
     private LoadBundle _bundleLoader;
     private GameObject model = null;
-    private float high_y=int.MinValue, low_y=int.MaxValue;
+    private float high_y=int.MinValue, low_y=int.MaxValue; // son usadas para el reescalamiento del objeto.
     private int model_index = 0;
     public string id = "";
 
@@ -38,7 +39,6 @@ public class PrefabBundle : MonoBehaviour
         // No hace nada si todavia no se termina de cargar el assetBundle.
         if (id == "" || !_bundleLoader.myAssetBundles.ContainsKey(id))
         {
-            deleteAssetGameObject();
             return;
         }
 
@@ -77,11 +77,11 @@ public class PrefabBundle : MonoBehaviour
     // Invoca el modelo del assetbundle que le corresponde al id y le agrega scripts
     // para agregarle interacciones. Cuando invoca un nuevo modelo se encarga de disponer
     // del modelo previo, solo puede haber 1 modelo por instancia de PrefabBundle.
-    public bool InstantiateObjectFromBundle(string ass)
+    public bool InstantiateObjectFromBundle(string assetName)
     {
         try
         {
-            var prefab = _bundleLoader.myAssetBundles[id].LoadAsset(ass);
+            var prefab = _bundleLoader.myAssetBundles[id].LoadAsset(assetName);
 
             deleteAssetGameObject();
             model = (GameObject)Instantiate(prefab, this.transform.position, Quaternion.identity, this.transform);
@@ -148,6 +148,8 @@ public class PrefabBundle : MonoBehaviour
 
             Transform tempTransform = model.transform;
 
+            // Recolecta las escalas del modelo y de su padre para
+            // poder crear los box collider del tamano correcto
             while(tempTransform != null)
             {
                 denominator.x *= tempTransform.localScale.x;
