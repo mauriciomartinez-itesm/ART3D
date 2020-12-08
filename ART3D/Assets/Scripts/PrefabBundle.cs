@@ -94,7 +94,7 @@ public class PrefabBundle : MonoBehaviour
 
             // Modifica la escala del modelo para que todos los modelos empiezen con la
             // misma altura.
-            float newScale = (high_y - low_y) * 0.5f / (high_y - low_y);
+            float newScale = 0.3f / (high_y - low_y);
             model.transform.localScale = new Vector3(newScale, newScale, newScale);
 
             // Cuando todo el proceso de instanciado del modelo salio bien, se enfoca el modelo.
@@ -141,9 +141,23 @@ public class PrefabBundle : MonoBehaviour
         {
             parts.Add(new Tuple<string, GameObject>(gameObject.transform.name, gameObject));
 
-            // Obtiene las medidas de cada render
-            Vector3 partCenter  = gameObject.GetComponent<MeshRenderer>().bounds.center;
-            Vector3 partSize    = gameObject.GetComponent<MeshRenderer>().bounds.size;
+            // Obtiene las medidas de cada render no importa si es MeshRender o SkinnedMeshRender
+            Vector3 partCenter = new Vector3();
+            Vector3 partSize = new Vector3();
+            MeshRenderer tempMR = gameObject.GetComponent<MeshRenderer>();
+            SkinnedMeshRenderer tempSMR = gameObject.GetComponent<SkinnedMeshRenderer>();
+
+            if (tempMR != null)
+            {
+                partCenter = tempMR.bounds.center;
+                partSize = tempMR.bounds.size;
+            }
+            if (tempSMR != null)
+            {
+                partCenter = tempSMR.bounds.center;
+                partSize = tempSMR.bounds.size;
+            }
+
             Vector3 denominator = new Vector3(1,1,1);
 
             Transform tempTransform = model.transform;
@@ -187,4 +201,6 @@ public class PrefabBundle : MonoBehaviour
     {
         return gameObject.GetComponent<MeshRenderer>() != null || gameObject.GetComponent<SkinnedMeshRenderer>() != null;
     }
+
+
 }

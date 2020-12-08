@@ -3069,7 +3069,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lastId: 
-  pathForLoadOnStart: 'https://drive.google.com/uc?export=download&id=1Z_Z1PRMxc5H1A0b0JBbHRTB7Xsa687ef '
+  pathForLoadOnStart: https://drive.google.com/uc?export=download&id=12NMF2Ho2iGXO51_tqFA5Ti_KRqz_xUVG
   webService: 1
   loadOnStart: 0
   debuglog: {fileID: 1566272863}

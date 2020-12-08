@@ -44,7 +44,7 @@ public class IdInfoCollection : MonoBehaviour
         // Imprime los ids obtenidos
         foreach (var el in _assetManager.assets)
         {
-            Debug.Log($"Key: {el.Key} Created by: {el.Value.createdby} Description: {el.Value.desc}");
+            Debug.Log($"Key: {el.Key} Name: {el.Value.name} Description: {el.Value.desc}");
         }
         if (_assetManager.assets.Count > 0)
             OnIdLoadingDone.Invoke();
