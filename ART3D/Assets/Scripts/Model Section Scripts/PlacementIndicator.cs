@@ -11,33 +11,24 @@ using UnityEngine.XR.ARSubsystems;
 public class PlacementIndicator : MonoBehaviour
 {
     private ARRaycastManager rayManager;
-    private GameObject visual;
 
     void Start ()
     {
-        // get the components
         rayManager = FindObjectOfType<ARRaycastManager>();
-        visual = transform.GetChild(0).gameObject;
-
-        // hide the placement indicator visual
-        visual.SetActive(false);
     }
     
     void Update ()
     {
-        // shoot a raycast from the center of the screen
+                                                            // Dispara el raycast desde el centro de la pantalla
         List<ARRaycastHit> hits = new List<ARRaycastHit>();
         rayManager.Raycast(new Vector2(Screen.width / 2, Screen.height / 2), hits, TrackableType.Planes);
 
-        // if we hit an AR plane surface, update the position and rotation
+                                                            // Si el raycast choca contra el plano/superfice AR, se actualiza  
+                                                            // la posicion y rotacion del GameObject que contiene este script.
         if(hits.Count > 0)
         {
             transform.position = hits[0].pose.position;
             transform.rotation = hits[0].pose.rotation;
-
-            // enable the visual if it's disabled
-            if(!visual.activeInHierarchy)
-                visual.SetActive(true);
         }
     }
 }

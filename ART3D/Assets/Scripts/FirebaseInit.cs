@@ -17,6 +17,7 @@ using Firebase.Extensions;
  * comunicacion porque generaran errores. Por esto es importante usar los
  * eventos 'OnFirebaseInitialized'.
  */
+
 public class FirebaseInit : MonoBehaviour
 {
     public UnityEvent OnFirebaseInitialized = new UnityEvent();
