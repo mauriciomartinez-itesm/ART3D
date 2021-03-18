@@ -34,7 +34,7 @@ public class OnModelClick : MonoBehaviour
             {
                 if (Input.touchCount == 0 && !Input.GetMouseButton(0))
                 {
-                    onModelClick?.Invoke( this.transform.parent.gameObject );
+                    onModelClick?.Invoke( this.transform.parent.parent.gameObject );
                     modelClicked = false;
                 }
             }

@@ -25,6 +25,7 @@ public class PrefabBundle : MonoBehaviour
 
     private float high_y=int.MinValue, low_y=int.MaxValue; // son usadas para el reescalamiento del objeto.
     private int numberOfModelsInAssetBundle = 0;
+    private GameObject modelContainer = null;
     private AssetBundle assetBundle;
     private GameObject model = null;
     private int model_index = 0;
@@ -71,10 +72,10 @@ public class PrefabBundle : MonoBehaviour
 
     public void DeleteAssetGameObject()
     {
-        if (model != null)
+        if (modelContainer != null)
         {
-            Destroy(model);
-            model = null;
+            Destroy(modelContainer);
+            modelContainer = null;
         }
     }
 
@@ -113,9 +114,22 @@ public class PrefabBundle : MonoBehaviour
             var prefab = assetBundle.LoadAsset(assetName);
 
             DeleteAssetGameObject();
-            model = (GameObject)Instantiate(prefab, this.transform.position, Quaternion.identity, this.transform);
-            model.AddComponent<RotateAxis>();
-            model.AddComponent<LeanPinchScale>();
+
+                                                            // Se utiliza un model container para asegurarnos que el pivote
+                                                            // del modelo estara posicionado pegado al suela permitiendo un
+                                                            // escalamiento correcto a la hora de usar el LeanPinchScale.
+            modelContainer = new GameObject("modelContainer");
+            modelContainer.transform.parent = this.transform;
+            modelContainer.transform.localPosition = new Vector3(0,0,0);
+            modelContainer.transform.localScale = new Vector3(1, 1, 1);
+
+
+            modelContainer.AddComponent<RotateAxis>();
+            modelContainer.AddComponent<LeanPinchScale>();
+            
+
+            model = (GameObject)Instantiate(prefab, modelContainer.transform.position, Quaternion.identity, modelContainer.transform);
+
             model.AddComponent<OnModelClick>();
 
             parts = new List<Tuple<string, GameObject>>();

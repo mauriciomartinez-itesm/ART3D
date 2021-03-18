@@ -49,7 +49,7 @@ public class BundleController : MonoBehaviour
             _bundleManager.AsyncAddAssetBundle("Test", pathForLoadOnStart);
         }
 
-        Application.targetFrameRate = 60;
+        Application.targetFrameRate = 10;
     }
 
                                                             // Este metodo se ejecuta cuando se selecciona un id del dropdown.

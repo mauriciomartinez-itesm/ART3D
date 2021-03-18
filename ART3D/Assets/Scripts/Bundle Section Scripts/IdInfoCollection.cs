@@ -23,7 +23,7 @@ public class IdInfoCollection : MonoBehaviour
 
     public void DownloadAndDeserializeIdInfoCollection(OnIdLoadingDoneHandler onIdLoadingDoneHandler)
     {
-        StartCoroutine( DownloadAndDeserialize( "https://art3d-e7c95.firebaseio.com/assetsInfo.json", onIdLoadingDoneHandler ) );
+        StartCoroutine( DownloadAndDeserialize( "https://art3d-e7c95.firebaseio.com/assets.json", onIdLoadingDoneHandler ) );
     }
 
                                                             // Obtiene el json del url de firebase y lo deserealiza con 
@@ -54,7 +54,7 @@ public class IdInfoCollection : MonoBehaviour
                                                             // Imprime los ids obtenidos
             foreach (var el in _assetBundleInfoFields.assetsInfo)
             {
-                Debug.Log($"Key: {el.Key} Name: {el.Value.name} Description: {el.Value.desc}");
+                Debug.Log($"Key: {el.Key} Name: {el.Value.name} Description: {el.Value.description} Tags: {string.Join(", ", el.Value.tags.ToArray())}");
             }
 
             onIdLoadingDoneHandler( _assetBundleInfoFields.assetsInfo );

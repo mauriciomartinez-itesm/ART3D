@@ -55,7 +55,7 @@ public class AssetBundleInfoFields
 
                                                             // Proceso de deserializacion del mini-json
                 AssetInfo info = JsonUtility.FromJson<AssetInfo>(miniJson);
-                if (info.restype == "assetbundle")
+                if (info.assetbundle)
                     assetsInfo.Add(id, info);
             }
             catch (Exception ex)
@@ -72,17 +72,18 @@ public class AssetBundleInfoFields
 public class AssetInfo
 {
     public string createdby = "";
-    public string desc = "";
+    public string description = "";
     public string name = "";
-    public string restype = "";
-    public Solicitor solicitor = new Solicitor();
+    public bool assetbundle = false;
+    public string solicitor = "";
+    public List<string> tags;
 }
 
-[Serializable]
-public class Solicitor
-{
-    public string email = "";
-    public string name = "";
-    public string role = "";
-    public string subject = "";
-}
+//[Serializable]
+//public class Solicitor
+//{
+//    public string email = "";
+//    public string name = "";
+//    public string role = "";
+//    public string subject = "";
+//}
