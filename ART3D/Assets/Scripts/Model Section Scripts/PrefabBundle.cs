@@ -22,8 +22,12 @@ public class PrefabBundle : MonoBehaviour
     [HideInInspector]
     public List<Tuple<string, GameObject>> parts;
     public string id = "";
-
-    private float high_y=int.MinValue, low_y=int.MaxValue; // son usadas para el reescalamiento del objeto.
+            
+                                                            // high_y y low_y son utilizadas para escalar el modelo
+                                                            // para que todos los modelos tengas la misma altura.
+                                                            // high_y contiene la posicion en y del punto mas alto del 
+                                                            // modelo, mientras que y_low el mas bajo.
+    private float high_y=int.MinValue, low_y=int.MaxValue;
     private int numberOfModelsInAssetBundle = 0;
     private GameObject modelContainer = null;
     private AssetBundle assetBundle;
@@ -39,6 +43,14 @@ public class PrefabBundle : MonoBehaviour
         assetBundle = assetBundleForPreab;
         numberOfModelsInAssetBundle = assetBundle.GetAllAssetNames().Length;
         parts = new List<Tuple<string, GameObject>>();
+
+                                                            // Se utiliza un model container para asegurarnos que el pivote
+                                                            // del modelo estara posicionado pegado al suela permitiendo un
+                                                            // escalamiento correcto a la hora de usar el LeanPinchScale.
+        if( modelContainer == null )
+        {
+            CreateModelContainer();
+        }
 
         model_index = (model_index + 1) >= (numberOfModelsInAssetBundle) ? model_index : model_index + 1;
 
@@ -72,10 +84,10 @@ public class PrefabBundle : MonoBehaviour
 
     public void DeleteAssetGameObject()
     {
-        if (modelContainer != null)
+        if (model != null)
         {
-            Destroy(modelContainer);
-            modelContainer = null;
+            Destroy(model);
+            model = null;
         }
     }
 
@@ -114,25 +126,16 @@ public class PrefabBundle : MonoBehaviour
             var prefab = assetBundle.LoadAsset(assetName);
 
             DeleteAssetGameObject();
-
-                                                            // Se utiliza un model container para asegurarnos que el pivote
-                                                            // del modelo estara posicionado pegado al suela permitiendo un
-                                                            // escalamiento correcto a la hora de usar el LeanPinchScale.
-            modelContainer = new GameObject("modelContainer");
-            modelContainer.transform.parent = this.transform;
-            modelContainer.transform.localPosition = new Vector3(0,0,0);
-            modelContainer.transform.localScale = new Vector3(1, 1, 1);
-
-
-            modelContainer.AddComponent<RotateAxis>();
-            modelContainer.AddComponent<LeanPinchScale>();
             
-
-            model = (GameObject)Instantiate(prefab, modelContainer.transform.position, Quaternion.identity, modelContainer.transform);
+            model = (GameObject)Instantiate(prefab, modelContainer.transform.position, modelContainer.transform.rotation, modelContainer.transform);
 
             model.AddComponent<OnModelClick>();
 
+                                                            // Reset de las variables dependientes del modelo que esta
+                                                            // en proceso de desplegarse.
             parts = new List<Tuple<string, GameObject>>();
+            high_y = int.MinValue;
+            low_y = int.MaxValue;
             GetPartsRecursiveAndAddColliders(model);
 
             Debug.Log("Low y: " + low_y);
@@ -155,6 +158,19 @@ public class PrefabBundle : MonoBehaviour
             Debug.LogError("Error:" + ex.Message);
             return false;
         }
+    }
+
+
+    private void CreateModelContainer()
+    {
+        modelContainer = new GameObject("modelContainer");
+        modelContainer.transform.parent = this.transform;
+        modelContainer.transform.localPosition = new Vector3(0,0,0);
+        modelContainer.transform.localScale = new Vector3(1, 1, 1);
+
+
+        modelContainer.AddComponent<RotateAxis>();
+        modelContainer.AddComponent<LeanPinchScale>();
     }
 
                                                             // Recorre todo el modelo en busca de Meshes que cataloga como

@@ -53,7 +53,27 @@ public class ModelManager : MonoBehaviour
 
     public void InitOnModelClick( GameObject prefabBundleGameObject)
     {
-        prefabBundleGameObject.GetComponentInChildren<OnModelClick>().onModelClick += executeOnModelClick;
+        OnModelClick _onModelClick = prefabBundleGameObject.GetComponentInChildren<OnModelClick>();
+        _onModelClick.onModelClick += executeOnModelClick;
+    }
+
+                                                            // Esta funcion inicializa la subscripcion al evento
+                                                            // onModelClick para el modelo actualmente enfocado. Esta funcion
+                                                            // se debe ejecutar desde una corrutina y normalmente se usa para
+                                                            // inicializar un nuevo modelo cuyo prefabBundle ya existia. 
+                                                            // Ejemplo: cuando un prefab bundle esta mostrando el primer modelo
+                                                            // de su assetbundle y se desea mostrar el segundo.
+                                                            // La funcion se espera hasta el siguiente frame para realizar la 
+                                                            // subscripcion porque debe de esperar a que el nuevo modelo se
+                                                            // termine de crear, de lo contrario no se asignara bien la 
+                                                            // subscripcion y el nuevo modelo no podra disparar los eventos
+                                                            // onModelClick.
+    public IEnumerator InitOnModelClickOfFocusedModel()
+    {
+        yield return null;
+        GameObject prefabBundleGameObject = _focus.GetFocusedGameObject();
+        OnModelClick _onModelClick = prefabBundleGameObject.GetComponentInChildren<OnModelClick>();
+        _onModelClick.onModelClick += executeOnModelClick;
     }
 
 
@@ -151,9 +171,14 @@ public class ModelManager : MonoBehaviour
     }
 
 
-    public void NextModel( PrefabBundle _prefabBundle )
+    public void NextModel()
     {
-        _prefabBundle.NextModel();
+        GameObject prefabBundleGameObject = _focus.GetFocusedGameObject();
+        prefabBundleGameObject.GetComponent<PrefabBundle>().NextModel();
+                                                            // La inicializacion esta dentro de una corrutina para que
+                                                            // se pueda realizar en el siguiente frame donde el modelo
+                                                            // ya exista y sus componentes esten estables.
+        StartCoroutine( InitOnModelClickOfFocusedModel() );
     }
 
     public void PreviousModel( PrefabBundle _prefabBundle )

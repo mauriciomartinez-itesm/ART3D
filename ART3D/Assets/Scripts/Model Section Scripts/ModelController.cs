@@ -84,4 +84,11 @@ public class ModelController : MonoBehaviour
     {
         _modelManager.SetCanSpawnModel( true );
     }
+
+                                                            // Despliega el sigiente modelo dentro del asetbundle
+                                                            // del modelo actualmente enfocado.
+    public void ButtonNextModel()
+    {
+        _modelManager.NextModel();
+    }
 }

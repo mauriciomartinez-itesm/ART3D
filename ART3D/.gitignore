@@ -9,6 +9,14 @@ Assets/3D Assets*
 Assets/Samples*
 Assets/SamplesResources*
 Assets/StreamingAssets*
+Assets/Editor Default Resources*
+Assets/ExternalDependencyManager*
+Assets/Firebase*
+Assets/Lean*
+Assets/Parse*
+Assets/Plugins*
+Assets/XR*
+
 Assets/Pkgs*
 
 # Visual Studio cache directory
@@ -18,6 +26,7 @@ Assets/Pkgs*
 ExportedObj/
 .consulo/
 *.csproj
+*.Timeline
 *.unityproj
 *.sln
 *.suo
@@ -29,6 +38,7 @@ ExportedObj/
 *.svd
 *.pdb
 *.opendb
+*.meta
 
 # Unity3D generated meta files
 *.pidb.meta
