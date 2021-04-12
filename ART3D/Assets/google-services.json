@@ -1,0 +1,93 @@
+{
+  "project_info": {
+    "project_number": "757334005626",
+    "firebase_url": "https://art3d-e7c95.firebaseio.com",
+    "project_id": "art3d-e7c95",
+    "storage_bucket": "art3d-e7c95.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:757334005626:android:bcc9ff25698f07b667a8c3",
+        "android_client_info": {
+          "package_name": "com.mirv.art3d"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "757334005626-v5ge7ll740aqtpieq38ksg5tu6lh22bq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mirv.art3d",
+            "certificate_hash": "acffa12748c0a869474e5eefe2c421e166155401"
+          }
+        },
+        {
+          "client_id": "757334005626-6q03bmh9aqt1c2nfrb3lelmbjec1nls9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mirv.art3d",
+            "certificate_hash": "ec868f47c17a9675ac31d8d4538a92c86262b5f3"
+          }
+        },
+        {
+          "client_id": "757334005626-r1fvcc109hdfmt9hnjl1s96rfh9pg532.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcPPU47D89XjoaYHMEYlK-pmqfDx-XowE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "757334005626-r1fvcc109hdfmt9hnjl1s96rfh9pg532.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:757334005626:android:6859e2e4dee44bb767a8c3",
+        "android_client_info": {
+          "package_name": "com.mirv.testart3d"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "757334005626-nomkm1p224sff3qq08n74ppbn8vcusfc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mirv.testart3d",
+            "certificate_hash": "acffa12748c0a869474e5eefe2c421e166155401"
+          }
+        },
+        {
+          "client_id": "757334005626-r1fvcc109hdfmt9hnjl1s96rfh9pg532.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcPPU47D89XjoaYHMEYlK-pmqfDx-XowE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "757334005626-r1fvcc109hdfmt9hnjl1s96rfh9pg532.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
