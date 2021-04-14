@@ -74,7 +74,7 @@ public class OnImageChangeController : MonoBehaviour
                     _bundleManager.AsyncAddAssetBundle(trackedImage.referenceImage.name);
 
                                                             // El modelo se enfoca por primera vez dentro del Script 
-                                                            // PrefabBundle cuando se termina de instanciar
+                                                            // ModelManager cuando se termina de instanciar
                     trackedImage.GetComponent<PrefabBundle>().id = trackedImage.referenceImage.name;
 
                                                             // Hace que los iconos de enfoque sean perpendiculares al piso
@@ -100,4 +100,5 @@ public class OnImageChangeController : MonoBehaviour
             }
         }
     }
+
 }

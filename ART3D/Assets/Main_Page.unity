@@ -235,6 +235,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &140240326 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3873094299678095849, guid: 29b187b29114ea745893461e27293c41,
+    type: 3}
+  m_PrefabInstance: {fileID: 627671862}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &157455194
 GameObject:
   m_ObjectHideFlags: 0
@@ -660,10 +672,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ObjectSpawner, Assembly-CSharp
-        m_MethodName: set_canSapwnObject
-        m_Mode: 6
+      - m_Target: {fileID: 566912233}
+        m_TargetAssemblyTypeName: ModelController, Assembly-CSharp
+        m_MethodName: ButtonNextModel
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1215,6 +1227,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 457262120}
   m_CullTransparentMesh: 0
+--- !u!114 &463128626 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4553763475035957538, guid: 657313ed37665534ca96076d14a7b760,
+    type: 3}
+  m_PrefabInstance: {fileID: 1669336112}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90577c535d085ee48a4adf1e2079e54e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &481322680
 GameObject:
   m_ObjectHideFlags: 0
@@ -1296,9 +1320,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Eraser, Assembly-CSharp
-        m_MethodName: buttonEraseAllModels
+      - m_Target: {fileID: 566912233}
+        m_TargetAssemblyTypeName: ModelController, Assembly-CSharp
+        m_MethodName: ButtonEraseAllModels
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1450,14 +1474,13 @@ GameObject:
   - component: {fileID: 566912231}
   - component: {fileID: 566912230}
   - component: {fileID: 566912229}
-  - component: {fileID: 566912228}
   m_Layer: 0
   m_Name: ModelController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &566912227
 Transform:
   m_ObjectHideFlags: 0
@@ -1472,22 +1495,6 @@ Transform:
   m_Father: {fileID: 1949125963}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &566912228
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 566912226}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 95bafaf307bfa7f40888be18fa181544, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _bundleManager: {fileID: 0}
-  debuglog: {fileID: 0}
-  pathForLoadOnStart: 
-  loadOnStart: 0
 --- !u!114 &566912229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1500,8 +1507,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64fa66a1c24178d4f85c846b70eb289c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  placementIndicator: {fileID: 0}
-  debuglog: {fileID: 0}
+  placementIndicator: {fileID: 463128626}
+  debuglog: {fileID: 140240326}
 --- !u!114 &566912230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1514,7 +1521,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb9c5224e95860d489f069a806a96a67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debugLog: {fileID: 0}
+  debugLog: {fileID: 140240326}
 --- !u!114 &566912231
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1539,11 +1546,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1fadbc12815a6a47b7ea95282cb8bbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bundleManager: {fileID: 0}
-  _modelSpawner: {fileID: 0}
-  _eraser: {fileID: 0}
-  debuglog: {fileID: 0}
-  _focus: {fileID: 0}
+  _bundleManager: {fileID: 2114669396}
+  _modelSpawner: {fileID: 566912229}
+  _eraser: {fileID: 566912230}
+  debuglog: {fileID: 140240326}
+  _focus: {fileID: 566912231}
 --- !u!114 &566912233
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1551,14 +1558,15 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 566912226}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2839cf09755e4b348ac7e715481c1086, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _modelManager: {fileID: 0}
-  prefabBundleEmptyGameObject: {fileID: 0}
-  debugLog: {fileID: 0}
+  _modelManager: {fileID: 566912232}
+  prefabBundleEmptyGameObject: {fileID: 2314652181018412295, guid: b46b13e0aaf256f4da626792fe7568cf,
+    type: 3}
+  debugLog: {fileID: 140240326}
 --- !u!1 &578098914
 GameObject:
   m_ObjectHideFlags: 0
@@ -1920,7 +1928,7 @@ PrefabInstance:
     - target: {fileID: 3873094299678095854, guid: 29b187b29114ea745893461e27293c41,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.00022244
+      value: 1865.3082
       objectReference: {fileID: 0}
     - target: {fileID: 3873094299678095854, guid: 29b187b29114ea745893461e27293c41,
         type: 3}
@@ -1935,7 +1943,7 @@ PrefabInstance:
     - target: {fileID: 3873094299678095854, guid: 29b187b29114ea745893461e27293c41,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 340.85175
+      value: 4125.57
       objectReference: {fileID: 0}
     - target: {fileID: 3873094300484793394, guid: 29b187b29114ea745893461e27293c41,
         type: 3}
@@ -2384,9 +2392,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Eraser, Assembly-CSharp
-        m_MethodName: buttonEraseFocuseModel
+      - m_Target: {fileID: 566912233}
+        m_TargetAssemblyTypeName: ModelController, Assembly-CSharp
+        m_MethodName: ButtonEraseFocusModel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3106,14 +3114,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1220729285}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e1760703bbd54c04488a8d10600262ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_PlanePrefab: {fileID: 4211198070103604431, guid: 745a5334772f9488b8d6db9c0b1e22cd,
     type: 3}
-  m_DetectionMode: -1
+  m_DetectionMode: 1
 --- !u!114 &1220729289
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3136,6 +3144,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1261797261}
+  - component: {fileID: 1261797262}
   m_Layer: 0
   m_Name: FirebaseInit
   m_TagString: Untagged
@@ -3157,6 +3166,58 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1261797262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1261797260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cb8e9ce261e1854aac124a03cbc6461, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnFirebaseInitialized:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 566912233}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 2114669397}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1917166039}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  debugLog: {fileID: 140240326}
 --- !u!1 &1268737062
 GameObject:
   m_ObjectHideFlags: 0
@@ -4957,10 +5018,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ObjectSpawner, Assembly-CSharp
-        m_MethodName: set_canSapwnObject
-        m_Mode: 6
+      - m_Target: {fileID: 566912233}
+        m_TargetAssemblyTypeName: ModelController, Assembly-CSharp
+        m_MethodName: ButtonEnableCanSpawnModel
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -5086,6 +5147,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1893194532}
   m_CullTransparentMesh: 0
+--- !u!1 &1917166037
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1917166038}
+  - component: {fileID: 1917166039}
+  m_Layer: 0
+  m_Name: Image Controller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1917166038
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1917166037}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1949125963}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1917166039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1917166037}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bf2c0d3c925ff64ba4173d0000fe072, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _bundleManager: {fileID: 2114669396}
+  _modelManager: {fileID: 566912232}
+  debuglog: {fileID: 140240326}
 --- !u!1 &1940396915
 GameObject:
   m_ObjectHideFlags: 0
@@ -5226,6 +5333,7 @@ Transform:
   m_Children:
   - {fileID: 2114669392}
   - {fileID: 566912227}
+  - {fileID: 1917166038}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5681,13 +5789,14 @@ GameObject:
   - component: {fileID: 2114669395}
   - component: {fileID: 2114669394}
   - component: {fileID: 2114669393}
+  - component: {fileID: 2114669398}
   m_Layer: 0
   m_Name: BundleController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2114669392
 Transform:
   m_ObjectHideFlags: 0
@@ -5726,7 +5835,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e9c71ed0fe956840a9d0fd2d61504b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropdown: {fileID: 0}
+  dropdown: {fileID: 847621238}
 --- !u!114 &2114669395
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5739,7 +5848,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc8968ccee6d79e438cf2d2ba1b0548f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debuglog: {fileID: 0}
+  debuglog: {fileID: 140240326}
 --- !u!114 &2114669396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5752,12 +5861,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20f21097482d4bb4a9fdba06382263d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _modelManager: {fileID: 0}
-  _idInfoCollection: {fileID: 0}
-  _bundleLoader: {fileID: 0}
-  _dropdownId: {fileID: 0}
-  _setTargets: {fileID: 0}
+  _modelManager: {fileID: 566912232}
+  _idInfoCollection: {fileID: 2114669393}
+  _bundleLoader: {fileID: 2114669395}
+  _dropdownId: {fileID: 2114669394}
+  _setTargets: {fileID: 2114669398}
 --- !u!114 &2114669397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2114669391}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95bafaf307bfa7f40888be18fa181544, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _bundleManager: {fileID: 2114669396}
+  debuglog: {fileID: 140240326}
+  pathForLoadOnStart: 
+  loadOnStart: 0
+--- !u!114 &2114669398
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5766,13 +5891,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 2114669391}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 95bafaf307bfa7f40888be18fa181544, type: 3}
+  m_Script: {fileID: 11500000, guid: dbb693e3088619f45bb3cc58143b26cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bundleManager: {fileID: 0}
-  debuglog: {fileID: 0}
-  pathForLoadOnStart: 
-  loadOnStart: 0
+  runtimeImageLibrary: {fileID: 0}
+  trackImageManager: {fileID: 2125570603}
+  prefabOnTrack: {fileID: 2314652181018412295, guid: b46b13e0aaf256f4da626792fe7568cf,
+    type: 3}
+  debugLog: {fileID: 140240326}
 --- !u!1 &2125570599
 GameObject:
   m_ObjectHideFlags: 0
@@ -5785,6 +5911,7 @@ GameObject:
   - component: {fileID: 2125570601}
   - component: {fileID: 2125570600}
   - component: {fileID: 2125570606}
+  - component: {fileID: 2125570603}
   m_Layer: 0
   m_Name: AR Session
   m_TagString: Untagged
@@ -5833,6 +5960,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2125570603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2125570599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dea56a9eaadd1c439095de4f9a371cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedLibrary: {fileID: 0}
+  m_MaxNumberOfMovingImages: 3
+  m_TrackedImagePrefab: {fileID: 2314652181018412295, guid: b46b13e0aaf256f4da626792fe7568cf,
+    type: 3}
 --- !u!114 &2125570606
 MonoBehaviour:
   m_ObjectHideFlags: 0
