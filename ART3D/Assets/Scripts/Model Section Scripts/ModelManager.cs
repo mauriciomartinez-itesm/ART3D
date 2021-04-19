@@ -146,7 +146,7 @@ public class ModelManager : MonoBehaviour
                                                             // prefabBundleGameObject para evitar tener objetos vacios. Si todo
                                                             // sale bien, el prefabBundleGameObject que contiene el modelo es
                                                             // enfocado e inicializado para subscribirse al evento onModelClick.
-    private void DisplayAssetBundleInPrefabBundle(GameObject prefabBundleGameObject, string id)
+    public void DisplayAssetBundleInPrefabBundle(GameObject prefabBundleGameObject, string id)
     {
         PrefabBundle _prefabBundle = prefabBundleGameObject.GetComponent<PrefabBundle>();
         AssetBundle assetBundle = _bundleManager.GetAssetBundle(id);
@@ -167,6 +167,8 @@ public class ModelManager : MonoBehaviour
         {
             InitOnModelClick( prefabBundleGameObject );
             FocusObject( prefabBundleGameObject );
+            
+            debuglog.text += "Despues de enfocar\n";
         }
     }
 

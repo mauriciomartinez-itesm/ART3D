@@ -71,7 +71,7 @@ public class BundleController : MonoBehaviour
     private void OnIdLoadingDoneHandler(Dictionary<string, AssetInfo> assetsInfo)
     {
         _bundleManager.AddIdsToDropdown( assetsInfo );
-        _bundleManager.DownloadAndAddTargets( assetsInfo );
+        //_bundleManager.DownloadAndAddTargets( assetsInfo );
     }
 
 

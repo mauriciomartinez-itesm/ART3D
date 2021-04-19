@@ -26,7 +26,7 @@ public class SetTargets : MonoBehaviour
     public GameObject prefabOnTrack;
     public Text debugLog;
 
-    private string firebaseBasePath = "gs://art3d-e7c95.appspot.com/targets/";
+    private string firebaseBasePath = "gs://art3d-e7c95.appspot.com/img/";
     private FirebaseStorage storage;
 
                                                             // Utilizando el diccionario assetsInfo crea una lista de los
@@ -43,9 +43,13 @@ public class SetTargets : MonoBehaviour
                                                             // Crea la lista de ids extrayendo las llaves del diccionario
                                                             // assetInfo.
             List<string> ids = new List<string>();
+            int counter = 16;
             foreach (var id in assetsInfo)
             {
                 ids.Add(id.Key);
+                counter--;
+                if (counter == 0)
+                    break;
             }
 
             await DownloadAndAddTargetsFromFirebase(ids);
@@ -85,7 +89,9 @@ public class SetTargets : MonoBehaviour
                                                             // con el assetbundle del id especificado.
     private async Task<string> GetFileUrlFromFirebase(string id)
     {
-        StorageReference storage_ref = storage.GetReferenceFromUrl( firebaseBasePath + id + ".jpg");
+        string reference_link = $"{firebaseBasePath}{id}.jpg";
+        StorageReference storage_ref = storage.GetReferenceFromUrl( reference_link );
+        //debugLog.text += $"Reference link: {reference_link}\n";
 
         string link = "";
         await storage_ref.GetDownloadUrlAsync().ContinueWith((Task<Uri> task) =>
@@ -96,7 +102,7 @@ public class SetTargets : MonoBehaviour
             }
             else
             {
-                debugLog.text += $"Failed to load link. Task Faulted: {task.IsFaulted} \n";
+                //debugLog.text += $"Failed to load link. Task Faulted: {task.IsFaulted} \n";
             }
         });
 

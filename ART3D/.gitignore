@@ -15,7 +15,6 @@ Assets/Firebase*
 Assets/Lean*
 Assets/Parse*
 Assets/Plugins*
-Assets/XR*
 
 Assets/Pkgs*
 
@@ -38,6 +37,7 @@ ExportedObj/
 *.svd
 *.pdb
 *.opendb
+
 
 # Unity3D generated meta files
 *.pidb.meta

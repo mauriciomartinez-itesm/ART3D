@@ -138,7 +138,6 @@ public class PrefabBundle : MonoBehaviour
             low_y = int.MaxValue;
             GetPartsRecursiveAndAddColliders(model);
 
-            Debug.Log("Low y: " + low_y);
 
                                                             // Modifica la escala del modelo para que todos los modelos empiezen 
                                                             // con la misma altura.
