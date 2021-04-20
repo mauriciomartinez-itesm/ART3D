@@ -50,8 +50,9 @@ public class ModelController : MonoBehaviour
                                                             // primer modelo del ultimo assetbundle correctamente descargado.
     public void ModelInstantiate(GameObject placementIndicator)
     {
-        string assetBundleId = _modelManager.GetLastLoadedId();
+        string assetBundleId = _modelManager.GetCurrentId();
         _modelManager.InstantiateModel( placementIndicator, prefabBundleEmptyGameObject, assetBundleId );
+        _modelManager.SetCanSpawnModel(false);
     }
 
 

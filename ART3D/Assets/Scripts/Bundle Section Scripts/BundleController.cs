@@ -60,6 +60,7 @@ public class BundleController : MonoBehaviour
         debuglog.text += $"Se selecciono: {id} \n";
         _bundleManager.SetCanSpawnModel( false );
         _bundleManager.AsyncAddAssetBundle(id);
+        _bundleManager.SetCanSpawnModel(true);
     }
 
                                                             // Este metodo es llamado cuando se terminan de recolectar los IDs 
@@ -71,7 +72,7 @@ public class BundleController : MonoBehaviour
     private void OnIdLoadingDoneHandler(Dictionary<string, AssetInfo> assetsInfo)
     {
         _bundleManager.AddIdsToDropdown( assetsInfo );
-        //_bundleManager.DownloadAndAddTargets( assetsInfo );
+        _bundleManager.DownloadAndAddTargets( assetsInfo );
     }
 
 
@@ -79,12 +80,12 @@ public class BundleController : MonoBehaviour
                                                             // que se estaba descargando. Si tuvo exito, se habilita la capacidad
                                                             // de instanciar un modelo y realiza el control de los assetbundles
                                                             // del cache.
-    private void OnAssetBundleFinishLoad(bool succesfullLoad)
+    private void OnAssetBundleFinishLoad(bool succesfullLoad, string assetBundleId)
     {
         if (succesfullLoad)
         {
             debuglog.text += $"Model Controller bundle was correctly loaded \n";
-            _bundleManager.SetCanSpawnModel( true );
+            _bundleManager.DisplayAssetBundleInPendingPrefabBundles(assetBundleId);
 
                                                             // Revisa que no haya mas assetbundles en la cache que lo
                                                             // permitido, ese numero se especifica en el script BundleLoader.

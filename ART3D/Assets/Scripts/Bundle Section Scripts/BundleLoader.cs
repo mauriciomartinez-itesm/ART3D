@@ -26,7 +26,7 @@ using UnityEngine.UI;
 
 public class BundleLoader : MonoBehaviour
 {  
-    public delegate void onAssetBundleFinishLoadHandler(bool succesfullLoad);
+    public delegate void onAssetBundleFinishLoadHandler(bool succesfullLoad, string assetBundleId);
     public event onAssetBundleFinishLoadHandler onAssetBundleFinishLoad;
     public Text debuglog;
 
@@ -35,6 +35,7 @@ public class BundleLoader : MonoBehaviour
     private Queue<string> assetBundleIdRegistry;
     private int maxCacheAssetBundlesCount = 2;
     private FirebaseStorage _firebasestorage;
+    private string currentId = ""; 
     private string lastId = "";
 
 
@@ -69,11 +70,13 @@ public class BundleLoader : MonoBehaviour
             return;
         }
 
+        currentId = id;
+
         if (myAssetBundles.ContainsKey(id))
         {
-            lastId = id;
             debuglog.text += "Ya esta cargado el AsetBundle \n";
-            onAssetBundleFinishLoad?.Invoke( true );
+            onAssetBundleFinishLoad?.Invoke( true, id );
+            lastId = currentId;
             return;
         }
 
@@ -120,9 +123,9 @@ public class BundleLoader : MonoBehaviour
     }
 
 
-    public string GetLastLoadedId()
+    public string GetCurrentId()
     {
-        return lastId;
+        return currentId;
     }
 
                                                             // Carga de manera local el assetbundle que se encuentra en
@@ -137,7 +140,7 @@ public class BundleLoader : MonoBehaviour
         }
         catch { }
 
-        onAssetBundleFinishLoad?.Invoke( myAssetBundles.ContainsKey(id) );
+        onAssetBundleFinishLoad?.Invoke( myAssetBundles.ContainsKey(id), id );
     }
 
                                                             // Utilizando el id se obtiene el url de firbase para descargar el 
@@ -158,12 +161,18 @@ public class BundleLoader : MonoBehaviour
             else
             {
                 debuglog.text += "Error getting firebase link\n";
+                throw new Exception("Error getting firebase link");
             }
 
         }
+                                                            // Si existe un problema en la descarga, el currentId
+                                                            // regresa al ultimo id que tuvo exito para evitar que
+                                                            // el usuario trate de instanciar del assetbundle que no 
+                                                            // existe.
         catch (Exception ex)
         {
             debuglog.text += $"Error en la descarga del asset bundle: {ex.Message}\n";
+            currentId = lastId;
         }
     }
 
@@ -200,7 +209,7 @@ public class BundleLoader : MonoBehaviour
             }
             else
             {
-                // Añade el Asset bundle al diccionario para accesarlo desde el prefabBundle
+                                                            // Añade el Asset bundle al diccionario para accesarlo desde el prefabBundle
                 AssetBundle assetBundletemp = DownloadHandlerAssetBundle.GetContent(uwr);
                 debuglog.text += $"The name of the asset bundle is: {assetBundletemp} \n";
                 if (assetBundletemp != null)
@@ -217,12 +226,13 @@ public class BundleLoader : MonoBehaviour
                     debuglog.text += $"The downloaded asset bundle is empty, probably you are " +
                         "trying to load an already existing asset bundle but with a different id. " +
                         "Or the asset bundle file is not valid. \n";
+                    currentId = lastId;
                 }
 
             }
         }
 
-        onAssetBundleFinishLoad?.Invoke(myAssetBundles.ContainsKey(id));
+        onAssetBundleFinishLoad?.Invoke(myAssetBundles.ContainsKey(id), id);
     }
 
 }

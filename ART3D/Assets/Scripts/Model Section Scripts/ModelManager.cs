@@ -23,9 +23,9 @@ public class ModelManager : MonoBehaviour
 
                                                             /* BUNDLE MANAGER SECTION START */
 
-    public string GetLastLoadedId()
+    public string GetCurrentId()
     {
-        return _bundleManager.GetLastLoadedId();
+        return _bundleManager.GetCurrentId();
     }
 
                                                             /* BUNDLE MANAGER SECTION END */
@@ -137,7 +137,10 @@ public class ModelManager : MonoBehaviour
         prefabBundleGameObject.GetComponent<PrefabBundle>().id = assetBundleId;
         prefabBundleGameObject.tag = "model";
 
-        DisplayAssetBundleInPrefabBundle( prefabBundleGameObject, assetBundleId );
+        InitOnModelClick(prefabBundleGameObject);
+        FocusObject(prefabBundleGameObject);
+
+        StartCoroutine( DisplayAssetBundleInPrefabBundle( prefabBundleGameObject, assetBundleId ) );
     }
 
                                                             // Si el assetbundle que se desea desplegar si esta cargado en
@@ -146,7 +149,7 @@ public class ModelManager : MonoBehaviour
                                                             // prefabBundleGameObject para evitar tener objetos vacios. Si todo
                                                             // sale bien, el prefabBundleGameObject que contiene el modelo es
                                                             // enfocado e inicializado para subscribirse al evento onModelClick.
-    public void DisplayAssetBundleInPrefabBundle(GameObject prefabBundleGameObject, string id)
+    public IEnumerator DisplayAssetBundleInPrefabBundle(GameObject prefabBundleGameObject, string id)
     {
         PrefabBundle _prefabBundle = prefabBundleGameObject.GetComponent<PrefabBundle>();
         AssetBundle assetBundle = _bundleManager.GetAssetBundle(id);
@@ -154,21 +157,28 @@ public class ModelManager : MonoBehaviour
         if (assetBundle == null)
         {
             Debug.Log("Null assetBundle");
-            Destroy(prefabBundleGameObject);
-            return;
+            //Destroy(prefabBundleGameObject);
+            yield break;
         }
 
         bool assetBundleCorrctlyDisplayed = _prefabBundle.DisplayAssetBundleInPrefabBundle(assetBundle);
 
+        yield return null;
                                                             // Si todo el proceso de instanciado del modelo salio bien, 
-                                                            // se inicializa el OnModelClick del prefabBUndle y se enfoca 
-                                                            // el modelo.
+                                                            // se inicializa el OnModelClick del prefabBUndle
         if (assetBundleCorrctlyDisplayed)
         {
             InitOnModelClick( prefabBundleGameObject );
-            FocusObject( prefabBundleGameObject );
-            
-            debuglog.text += "Despues de enfocar\n";
+        }
+    }
+
+    public void DisplayAssetBundleInPendingPrefabBundles(string assetBundleId)
+    {
+        var all_prefab_bundles = GameObject.FindObjectsOfType<PrefabBundle>();
+        foreach (PrefabBundle prefab_bundle in all_prefab_bundles)
+        {
+            if(prefab_bundle.numberOfModelsInAssetBundle == 0)
+                StartCoroutine( DisplayAssetBundleInPrefabBundle(prefab_bundle.gameObject, assetBundleId));
         }
     }
 

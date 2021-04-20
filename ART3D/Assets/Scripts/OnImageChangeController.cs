@@ -71,11 +71,13 @@ public class OnImageChangeController : MonoBehaviour
                 {
                     debuglog.text += $"SI se detecto la imagen. Child Count: {trackedImage.transform.childCount}\n";
 
+
                     _bundleManager.AsyncAddAssetBundle(trackedImage.referenceImage.name);
 
                                                             // El modelo se enfoca por primera vez dentro del Script 
                                                             // ModelManager cuando se termina de instanciar
                     trackedImage.GetComponent<PrefabBundle>().id = trackedImage.referenceImage.name;
+                    StartCoroutine( _modelManager.DisplayAssetBundleInPrefabBundle(trackedImage.gameObject, trackedImage.referenceImage.name) );
 
                                                             // Hace que los iconos de enfoque sean perpendiculares al piso
                     trackedImage.transform.GetChild(childIndexMarkers).eulerAngles = new Vector3(0, 0, 0);

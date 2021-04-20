@@ -33,11 +33,16 @@ public class BundleManager : MonoBehaviour
         _modelManager.DeleteAllPrefabBundlesWithId( id );
     }
 
+    public void DisplayAssetBundleInPendingPrefabBundles(string assetBundleId)
+    {
+        _modelManager.DisplayAssetBundleInPendingPrefabBundles(assetBundleId);
+    }
+
                                                             /* MODEL MANAGER SECTION END */
 
 
 
-                                                            /* BUNDLE LOADER SECTION START */
+    /* BUNDLE LOADER SECTION START */
 
     public void InitBundleLoader()
     {
@@ -45,9 +50,9 @@ public class BundleManager : MonoBehaviour
         _bundleLoader.onAssetBundleFinishLoad += ExecuteOnAssetBundleFinishLoad;
     }
 
-    private void ExecuteOnAssetBundleFinishLoad(bool succesfullLoad)
+    private void ExecuteOnAssetBundleFinishLoad(bool succesfullLoad, string assetBundleId)
     {
-        onAssetBundleFinishLoad?.Invoke(succesfullLoad);
+        onAssetBundleFinishLoad?.Invoke(succesfullLoad, assetBundleId);
     }
 
     public void AsyncAddAssetBundle( string id, string assetBundlePath = "")
@@ -65,9 +70,9 @@ public class BundleManager : MonoBehaviour
         return _bundleLoader.GetAssetBundle( id );
     }
 
-    public string GetLastLoadedId()
+    public string GetCurrentId()
     {
-        return _bundleLoader.GetLastLoadedId();
+        return _bundleLoader.GetCurrentId();
     }
 
                                                             /* BUNDLE LOADER SECTION END */
