@@ -33,7 +33,7 @@ public class DropdownId : MonoBehaviour
     {
         foreach (var el in assetsInfo)
         {
-            dropdown.options.Add(new Dropdown.OptionData() { text = el.Key });
+            dropdown.options.Add(new Dropdown.OptionData() { text = el.Value.name });
         }
     }
 
