@@ -18,6 +18,8 @@ public class BundleController : MonoBehaviour
     
     public Text debuglog;
 
+    public Dictionary<string, AssetInfo> cardInfo;
+
     [Tooltip("La direccion en la cual se encuentra el archivo AssetBundle, si se obtendra de internet debe de ser un url directo al archivo.")]
     public string pathForLoadOnStart;
 
@@ -73,6 +75,7 @@ public class BundleController : MonoBehaviour
     {
         _bundleManager.AddIdsToDropdown( assetsInfo );
         _bundleManager.DownloadAndAddTargets( assetsInfo );
+        cardInfo = assetsInfo;
     }
 
 

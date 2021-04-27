@@ -23,7 +23,7 @@ public class DropdownId : MonoBehaviour
         dropdown.onValueChanged.AddListener(delegate { DropdownIdSelected(dropdown); });
     }
 
-    public void ClearDropdown()
+    public void ClearDropdown() 
     {
         dropdown.options.Clear();
         dropdown.options.Add(new Dropdown.OptionData() { text = defaultMessage });
@@ -33,7 +33,7 @@ public class DropdownId : MonoBehaviour
     {
         foreach (var el in assetsInfo)
         {
-            dropdown.options.Add(new Dropdown.OptionData() { text = el.Value.name });
+            dropdown.options.Add(new Dropdown.OptionData() { text = el.Key });
         }
     }
 

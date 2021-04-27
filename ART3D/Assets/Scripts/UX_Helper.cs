@@ -7,40 +7,40 @@ using UnityEngine.UI;
 
 public class UX_Helper : MonoBehaviour
 {
+    private bool state = false;
+    private bool activate = false;
+    private bool visible = false;
+    private bool showing = false;
     GameObject Menu;
     GameObject Select;
 
-    public Button Refresh;
-    public Button Delete;
-    public Button Close;
-    public Button Instrucciones;
-    public Button Politica;
-    public Button Aviso;
-
     public GameObject Dock;
     public GameObject Console;
-    public GameObject MenuDock;
+
+    // Seccion de Docks (Arreglos de botones)
+    public GameObject MainDock;
     public GameObject ActionDock;
-    public GameObject Options;
-    public GameObject[] Controls;
-    public bool state = true;
-   
+    // seccion de vistas
+    public GameObject OptionsView;
+    public GameObject CollectionView;
+    //seccion de prefabs
+    public GameObject CardPrefab;
 
-
+    //Muestra el Dock (Barra inferior con acciones)
     public void ShowDock()
     {
         if (state)
         {
+            //Oculta el Dock 
             state = false;
-            Debug.Log("on");
             Vector3 pos = transform.position;
             pos.y = -1080;
             LeanTween.moveLocalY(Dock, pos.y, 1).setEaseInExpo();
         }
         else
         {
+            //Muestra el Dock
             state = true;
-            Debug.Log("off");
             Vector3 pos = transform.position;
             pos.y = -1280;
             LeanTween.moveLocalY(Dock, pos.y, 1).setEaseOutExpo();
@@ -50,18 +50,56 @@ public class UX_Helper : MonoBehaviour
 
 
     //Activa el el menu en el dock
-    public void OptionsView()
+    public void ShowCollection()
     {
-        Options.SetActive(true);
-        MenuDock.SetActive(false);
+        if (activate)
+        {
+            CollectionView.SetActive(true);
+            activate = false;
+            Debug.Log("Working ON");
+            
+            //crea las cards
+            for (int i = 0; i < 10; i++)
+            {
+
+                GameObject NewCard = Instantiate(CardPrefab, transform.position, transform.rotation) as GameObject;
+                NewCard.transform.SetParent(GameObject.FindGameObjectWithTag("Cardpanel").transform, false);
+                
+
+            }
+            Destroy(CardPrefab);
+        }
+        else
+        {
+            activate = true;
+            Debug.Log("Working OFF");
+            CollectionView.SetActive(false);
+            
+        }
+
         
     }
 
-    public void DissmissView()
+    public void ShowOptions() 
     {
-        Options.SetActive(false);
-        MenuDock.SetActive(true);
+        if (showing)
+        {
+            showing = false;
+            Debug.Log("Option menu off");
+            OptionsView.SetActive(showing);
+            
+        }
+        else
+        {
+            showing = true;
+            Debug.Log("option menu on");
+            OptionsView.SetActive(showing);
+            
+
+        }
     }
+
+  
    
     public void ConsoleMenu()
     {
@@ -75,7 +113,7 @@ public class UX_Helper : MonoBehaviour
     public void CloseConsole()
     {
         ActionDock.SetActive(false);
-        MenuDock.SetActive(true);
+        MainDock.SetActive(true);
 
         Vector3 pos = transform.position;
         pos.y = -1090;
@@ -84,21 +122,17 @@ public class UX_Helper : MonoBehaviour
 
     }
 
-    public void expandView()
-    {
-        Vector3 pos = transform.position;
-        pos.y = 1000;
-        LeanTween.moveY(Console, pos.y, 1).setEaseInSine();
-    }
-
-    
+  
 
     private void Start()
     {
-        MenuDock.SetActive(true);
+        ShowDock();
+        MainDock.SetActive(true);
         ActionDock.SetActive(false);
-        Options.SetActive(false);
-        
+        OptionsView.SetActive(false);
+        CollectionView.SetActive(false);
+
+
         
     }
     //Dock Behavior
