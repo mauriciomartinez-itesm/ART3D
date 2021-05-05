@@ -65,7 +65,7 @@ public class UX_Helper : MonoBehaviour
             CollectionView.SetActive(true);
             //crea las cards
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 2; i++)
             {
 
                 GameObject NewCard = Instantiate(CardPrefab, transform.position, transform.rotation) as GameObject;
@@ -73,7 +73,7 @@ public class UX_Helper : MonoBehaviour
 
 
             }
-            Destroy(CardPrefab);
+            
 
         }
         else
