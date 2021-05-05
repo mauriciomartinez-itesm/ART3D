@@ -11,6 +11,10 @@ public class UX_Helper : MonoBehaviour
     private bool activate = false;
     private bool visible = false;
     private bool showing = false;
+    private bool click = false;
+
+    public Button CollectionBtn;
+
     GameObject Menu;
     GameObject Select;
 
@@ -54,27 +58,32 @@ public class UX_Helper : MonoBehaviour
     {
         if (activate)
         {
-            CollectionView.SetActive(true);
             activate = false;
-            Debug.Log("Working ON");
             
+            MainDock.SetActive(false);
+            ActionDock.SetActive(true);
+            CollectionView.SetActive(true);
             //crea las cards
+
             for (int i = 0; i < 10; i++)
             {
 
                 GameObject NewCard = Instantiate(CardPrefab, transform.position, transform.rotation) as GameObject;
                 NewCard.transform.SetParent(GameObject.FindGameObjectWithTag("Cardpanel").transform, false);
-                
+
 
             }
             Destroy(CardPrefab);
+
         }
         else
         {
             activate = true;
-            Debug.Log("Working OFF");
-            CollectionView.SetActive(false);
             
+            CollectionView.SetActive(false);
+            ActionDock.SetActive(false);
+            MainDock.SetActive(true);
+           
         }
 
         
@@ -86,16 +95,14 @@ public class UX_Helper : MonoBehaviour
         {
             showing = false;
             Debug.Log("Option menu off");
-            OptionsView.SetActive(showing);
-            
+            OptionsView.SetActive(showing);    
         }
         else
         {
             showing = true;
             Debug.Log("option menu on");
+            MainDock.SetActive(true);
             OptionsView.SetActive(showing);
-            
-
         }
     }
 
@@ -122,7 +129,22 @@ public class UX_Helper : MonoBehaviour
 
     }
 
-  
+    public void CollectionClick()
+    {
+        if (click)
+        {
+            click = true;
+            Debug.Log("click listener on");
+        }
+        else
+        {
+            click = false;
+            Debug.Log("click listener off");
+
+        }
+    }
+
+   
 
     private void Start()
     {
@@ -132,12 +154,12 @@ public class UX_Helper : MonoBehaviour
         OptionsView.SetActive(false);
         CollectionView.SetActive(false);
 
-
-        
+        CollectionBtn.onClick.AddListener(CollectionClick);
     }
     //Dock Behavior
 
     private void Update()
     {
+       
     }
 }
