@@ -65,14 +65,16 @@ public class UX_Helper : MonoBehaviour
             CollectionView.SetActive(true);
             //crea las cards
 
-            for (int i = 0; i < 2; i++)
-            {
+            //foreach (var element in assetsInfo)
+            //{
 
-                GameObject NewCard = Instantiate(CardPrefab, transform.position, transform.rotation) as GameObject;
-                NewCard.transform.SetParent(GameObject.FindGameObjectWithTag("Cardpanel").transform, false);
+            //    GameObject NewCard = Instantiate(CardPrefab, transform.position, transform.rotation) as GameObject;
+            //    NewCard.transform.SetParent(GameObject.FindGameObjectWithTag("Cardpanel").transform, false);
 
-
-            }
+            //    NewCard.transform.name = element.Key;
+            //    NewCard.transform.GetChild(2).GetComponent<Text>().text = element.Value.name;
+            //    //NewCard.transform.GetChild(1).GetComponent<Text>().text = element.Value.;
+            //}
             
 
         }

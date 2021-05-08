@@ -11,27 +11,28 @@ using UnityEngine.Networking;
  * recorre el json creando 1 sub-json por cada modelo, los cuales son deserealizados a las clases
  * AssetInfo y Solicitor para guardarlos en el diccionario 'assetsInfo' cuya llave es el id
  * y su valor es la informacion del modelo.
- * Solo si obtuvo exito en obtener la informacion de los assets invoca la funcion onIdLoadingDoneHandler.
+ * Solo si obtuvo exito en obtener la informacion de los assets invoca la funcion onIdsLoadingDoneHandler.
  */
 
 public class IdInfoCollection : MonoBehaviour
 {
     [HideInInspector]
     public AssetBundleInfoFields _assetBundleInfoFields;
-    public delegate void OnIdLoadingDoneHandler(Dictionary<string, AssetInfo> assetsInfo);
+    public delegate void onIdsLoadingDoneHandler(Dictionary<string, AssetInfo> assetsInfo);
+    public event onIdsLoadingDoneHandler onIdsLoadingDone;
 
 
-    public void DownloadAndDeserializeIdInfoCollection(OnIdLoadingDoneHandler onIdLoadingDoneHandler)
+    public void DownloadAndDeserializeIdInfoCollection()
     {
-        StartCoroutine( DownloadAndDeserialize( "https://art3d-e7c95.firebaseio.com/assets.json", onIdLoadingDoneHandler ) );
+        StartCoroutine( DownloadAndDeserialize( "https://art3d-e7c95.firebaseio.com/assets.json") );
     }
 
                                                             // Obtiene el json del url de firebase y lo deserealiza con 
                                                             // la funcion Deserialize para obtener los ids e informacion
                                                             // adicional como nombre y descripcion. Si tuvo exito en la
-                                                            // descarga de los assetbundles entonces invoca el metodo
-                                                            // onIdLoadingDoneHandler.
-    private IEnumerator DownloadAndDeserialize(string url, OnIdLoadingDoneHandler onIdLoadingDoneHandler)
+                                                            // descarga de la info de assetbundles entonces invoca el metodo
+                                                            // onIdsLoadingDoneHandler.
+    private IEnumerator DownloadAndDeserialize(string url)
     {
                                                             // Parte que obtiene el Json
         var request = new UnityWebRequest(url);
@@ -57,7 +58,7 @@ public class IdInfoCollection : MonoBehaviour
                 Debug.Log($"Key: {el.Key} Name: {el.Value.name} Description: {el.Value.description} Tags: {string.Join(", ", el.Value.tags.ToArray())}");
             }
 
-            onIdLoadingDoneHandler( _assetBundleInfoFields.assetsInfo );
+            onIdsLoadingDone.Invoke( _assetBundleInfoFields.assetsInfo );
         }
         else
         {
