@@ -1482,7 +1482,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 1669336112}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1075092729}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 90577c535d085ee48a4adf1e2079e54e, type: 3}
@@ -3027,12 +3027,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 2107160645}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1075092729 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 726527287472277516, guid: 657313ed37665534ca96076d14a7b760,
-    type: 3}
-  m_PrefabInstance: {fileID: 1669336112}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1112097043
 GameObject:
   m_ObjectHideFlags: 0
@@ -3317,7 +3311,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1760703bbd54c04488a8d10600262ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_PlanePrefab: {fileID: 1075092729}
+  m_PlanePrefab: {fileID: 0}
   m_DetectionMode: 1
 --- !u!114 &1220729289
 MonoBehaviour:
@@ -6442,7 +6436,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 520bb47c46cf8624fafb307b7d1b862a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 884158925}
 --- !u!1 &2131695896
 GameObject:
   m_ObjectHideFlags: 0

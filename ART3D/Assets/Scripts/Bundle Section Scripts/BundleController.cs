@@ -37,13 +37,12 @@ public class BundleController : MonoBehaviour
         _bundleManager.onDropdownIdSelected += OnDropdownIdSelected;
         _bundleManager.onIdsLoadingDone += OnIdsLoadingDoneHandler;
 
-
-
                                                             // Borra las opciones que contenia el dropdown para llenarlo con
                                                             // los ids disponibles en firebase. Cuando termina la descarga
                                                             // de todos los ids ejecuta la funcion onIdLoadingDoneHandler.
         _bundleManager.ClearDropdown();
         _bundleManager.DownloadAndDeserializeIdInfoCollection();
+
 
                                                             // Si la opcion loadOnStart esta activada significa que se desea
                                                             // mostrar un assetbundle desde el inicio. Por esto se agrega
