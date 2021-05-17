@@ -18,8 +18,6 @@ public class BundleController : MonoBehaviour
     
     public Text debuglog;
 
-    public Dictionary<string, AssetInfo> cardInfo;
-
     [Tooltip("La direccion en la cual se encuentra el archivo AssetBundle, si se obtendra de internet debe de ser un url directo al archivo.")]
     public string pathForLoadOnStart;
 
@@ -28,19 +26,23 @@ public class BundleController : MonoBehaviour
 
     void Start()
     {
-                                                            // Inicializa el BundleLoader y el DropDownId para poder subscribirse
-                                                            // a los eventos onAssetBundleFinishLoad y onDropdownIdSelected
+                                                            // Inicializa el BundleLoader, IdInfoCollection y el DropDownId para 
+                                                            // poder subscribirse a los eventos onAssetBundleFinishLoad, onDropdownIdSelected
+                                                            // y onIdsLoadingDone
         _bundleManager.InitBundleLoader();
         _bundleManager.InitDropdownId();
+        _bundleManager.InitIdInfoCollection();
+
+        _bundleManager.onAssetBundleFinishLoad += OnAssetBundleFinishLoad;
+        _bundleManager.onDropdownIdSelected += OnDropdownIdSelected;
+        _bundleManager.onIdsLoadingDone += OnIdsLoadingDoneHandler;
 
                                                             // Borra las opciones que contenia el dropdown para llenarlo con
                                                             // los ids disponibles en firebase. Cuando termina la descarga
                                                             // de todos los ids ejecuta la funcion onIdLoadingDoneHandler.
         _bundleManager.ClearDropdown();
-        _bundleManager.DownloadAndDeserializeIdInfoCollection( OnIdLoadingDoneHandler );
+        _bundleManager.DownloadAndDeserializeIdInfoCollection();
 
-        _bundleManager.onDropdownIdSelected += OnDropdownIdSelected;
-        _bundleManager.onAssetBundleFinishLoad += OnAssetBundleFinishLoad;
 
                                                             // Si la opcion loadOnStart esta activada significa que se desea
                                                             // mostrar un assetbundle desde el inicio. Por esto se agrega
@@ -71,11 +73,10 @@ public class BundleController : MonoBehaviour
                                                             // bundle como descripcion y nombre. Dentro de la funcion se 
                                                             // agregan/despliegan los ids en el dropdown y se descargan y registran 
                                                             // sus respectivos targets (si es que existen).
-    private void OnIdLoadingDoneHandler(Dictionary<string, AssetInfo> assetsInfo)
+    private void OnIdsLoadingDoneHandler(Dictionary<string, AssetInfo> assetsInfo)
     {
         _bundleManager.AddIdsToDropdown( assetsInfo );
         _bundleManager.DownloadAndAddTargets( assetsInfo );
-        cardInfo = assetsInfo;
     }
 
 

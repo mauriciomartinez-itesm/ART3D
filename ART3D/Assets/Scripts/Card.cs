@@ -11,10 +11,12 @@ using UnityEngine;
 public class Card
 {
 
-    public string ObjectName; //Nombre del objeto
+    public GameObject cardGameObject; //El objeto
+    public string assetBundleName; // Nombre del assetBundle
     public string NumberofModels; //Numero de Modelos
     public string CRN; // CRN de la Materia
     public Sprite thumbnail; //Imagen del objeto
+    public bool isFavorite;
 }
 
 

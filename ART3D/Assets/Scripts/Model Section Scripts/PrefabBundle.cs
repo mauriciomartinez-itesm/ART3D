@@ -26,11 +26,13 @@ public class PrefabBundle : MonoBehaviour
     public GameObject model = null;
     public string id = "";
             
-                                                            // high_y y low_y son utilizadas para escalar el modelo
-                                                            // para que todos los modelos tengas la misma altura.
-                                                            // high_y contiene la posicion en y del punto mas alto del 
-                                                            // modelo, mientras que y_low el mas bajo.
-    private float high_y=int.MinValue, low_y=int.MaxValue;
+                                                            // modelUpperBounds y modelLowerBounds son utilizados para
+                                                            // escalar el modelo para que todos los modelos tengan la misma
+                                                            // altura. modelUpperBounds contiene los limites superiores X, Y, Z 
+                                                            // de la caja que enceirra al modelo, mientras que modelLowerBounds
+                                                            // contiene los limites inferiores.
+    private Vector3 modelUpperBounds=Vector3.one *int.MinValue;
+    private Vector3 modelLowerBounds= Vector3.one * int.MaxValue;
     private AssetBundle assetBundle;
     private int model_index = 0;
 
@@ -136,25 +138,28 @@ public class PrefabBundle : MonoBehaviour
                                                             // Reset de las variables dependientes del modelo que esta
                                                             // en proceso de desplegarse.
             parts = new List<Tuple<string, GameObject>>();
-            high_y = int.MinValue;
-            low_y = int.MaxValue;
+            modelUpperBounds=Vector3.one *int.MinValue;
+            modelLowerBounds= Vector3.one * int.MaxValue;
             GetPartsRecursiveAndAddColliders(model);
 
 
                                                             // Modifica la escala del modelo para que todos los modelos empiezen 
                                                             // con la misma altura.
             float newScale = 1;
-            if(high_y - low_y != 0)
-            {
-                newScale = 0.3f / (high_y - low_y);
-                model.transform.localScale = new Vector3(newScale, newScale, newScale);
-            }
+            float modelSizeX = modelUpperBounds.x - modelLowerBounds.x;
+            float modelSizeY = modelUpperBounds.y - modelLowerBounds.y;
+            float modelSizeZ = modelUpperBounds.z - modelLowerBounds.z;
+
+            float maxModelSize = Mathf.Max(modelSizeX, modelSizeY, modelSizeZ);
+
+            newScale = 0.3f / maxModelSize;
+            model.transform.localScale = new Vector3(newScale, newScale, newScale);
             
 
                                                             // Posiciona el objeto como si estuviera apoyado en la mesa sin importar
                                                             // la posicion original.
             Vector3 positionHelper = model.transform.localPosition;
-            positionHelper.y += low_y * -1 * newScale;
+            positionHelper.y += modelLowerBounds.y * -1 * newScale;
             model.transform.localPosition = positionHelper;
 
             return true;
@@ -226,6 +231,7 @@ public class PrefabBundle : MonoBehaviour
             partSize.y /= denominator.y;
             partSize.z /= denominator.z;
 
+                                                            // Se restan las dos posiciones globales para obtener una relativa
             partCenter -= model.transform.position;
             partCenter.x /= denominator.x;
             partCenter.y /= denominator.y;
@@ -236,12 +242,21 @@ public class PrefabBundle : MonoBehaviour
             tempBox.size = partSize;
             tempBox.center = partCenter;
 
-                                                            // high_y contiene la posicion en y de la parte mas alta del
-                                                            // modelo hasta ahora mientras que la low_y la mas baja.
-                                                            // Esta informacion sera utilizada para re-escalar el modelo
-                                                            // para que todos sean de la misma altura.
-            high_y = Math.Max(high_y, partCenter.y + (partSize.y) / 2);
-            low_y = Math.Min(low_y, partCenter.y - (partSize.y) / 2);
+                                                            // modelUpperBounds contiene los limites superiores de la caja que
+                                                            // enceirra al modelo computada hasta ahora, con cada iteracion se
+                                                            // analiza un nuevo mesh (una nueva parte del modelo) que puede hacer
+                                                            // crecer la caja que encierra al modelo. Por otro lado model LowerBounds
+                                                            // contiene los limites limites inferiores computados hasta ahora.
+                                                            // Esta informacion sera utilizada para re-escalar el modelo para que
+                                                            // todos los modelos sean de la misma altura.
+            modelUpperBounds.x = Math.Max(modelUpperBounds.x, partCenter.x + (partSize.x) / 2);
+            modelLowerBounds.x = Math.Min(modelLowerBounds.x, partCenter.x - (partSize.x) / 2);
+
+            modelUpperBounds.y = Math.Max(modelUpperBounds.y, partCenter.y + (partSize.y) / 2);
+            modelLowerBounds.y = Math.Min(modelLowerBounds.y, partCenter.y - (partSize.y) / 2);
+
+            modelUpperBounds.z = Math.Max(modelUpperBounds.z, partCenter.z + (partSize.z) / 2);
+            modelLowerBounds.z = Math.Min(modelLowerBounds.z, partCenter.z - (partSize.z) / 2);
         }
 
         for (int hijo = 0; hijo < gameObject.transform.childCount; hijo++)

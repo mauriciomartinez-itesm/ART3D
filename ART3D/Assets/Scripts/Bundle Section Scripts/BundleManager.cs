@@ -19,6 +19,7 @@ public class BundleManager : MonoBehaviour
 
     public event BundleLoader.onAssetBundleFinishLoadHandler onAssetBundleFinishLoad;
     public event DropdownId.onDropdownIdSelectedHandler onDropdownIdSelected;
+    public event IdInfoCollection.onIdsLoadingDoneHandler onIdsLoadingDone;
 
 
                                                             /* MODEL MANAGER SECTION START */
@@ -42,7 +43,7 @@ public class BundleManager : MonoBehaviour
 
 
 
-    /* BUNDLE LOADER SECTION START */
+                                                            /* BUNDLE LOADER SECTION START */
 
     public void InitBundleLoader()
     {
@@ -107,16 +108,26 @@ public class BundleManager : MonoBehaviour
 
                                                             /* ID INFO COLLECTION SECTION START */
 
-    public void DownloadAndDeserializeIdInfoCollection(IdInfoCollection.OnIdLoadingDoneHandler onIdLoadingDoneHandler)
+    public void InitIdInfoCollection()
     {
-        _idInfoCollection.DownloadAndDeserializeIdInfoCollection( onIdLoadingDoneHandler);
+        _idInfoCollection.onIdsLoadingDone += ExecuteOnIdsLoadingDone;
     }
 
-                                                            /* ID INFO COLLECTION SECTION END */
+    public void ExecuteOnIdsLoadingDone(Dictionary<string, AssetInfo> assetsInfo)
+    {
+        onIdsLoadingDone.Invoke(assetsInfo);
+    }
+
+    public void DownloadAndDeserializeIdInfoCollection()
+    {
+        _idInfoCollection.DownloadAndDeserializeIdInfoCollection();
+    }
+
+    /* ID INFO COLLECTION SECTION END */
 
 
 
-                                                            /* SET TARGETS SECTION START */
+    /* SET TARGETS SECTION START */
 
     public void DownloadAndAddTargets(Dictionary<string, AssetInfo> assetsInfo)
     {
