@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class UX_Helper : MonoBehaviour
 {
     private bool state = false;
-    private bool activate = false;
+    private bool activate = true;
     private bool visible = false;
     private bool showing = false;
     private bool click = false;

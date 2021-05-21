@@ -3037,6 +3037,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1112097044}
   - component: {fileID: 1112097045}
+  - component: {fileID: 1112097046}
   m_Layer: 0
   m_Name: CardController
   m_TagString: Untagged
@@ -3070,30 +3071,127 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e30b37b56745e2348aa761ed18120d00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cards:
-  - cardGameObject: {fileID: 0}
-    assetBundleName: 
-    NumberofModels: 8
-    CRN: ABC0001
-    thumbnail: {fileID: 0}
-    isFavorite: 0
-  - cardGameObject: {fileID: 0}
-    assetBundleName: 
-    NumberofModels: 4
-    CRN: ABC0002
-    thumbnail: {fileID: 0}
-    isFavorite: 0
-  - cardGameObject: {fileID: 0}
-    assetBundleName: 
-    NumberofModels: 2
-    CRN: ABC0003
-    thumbnail: {fileID: 0}
-    isFavorite: 0
   _bundleManager: {fileID: 2114669396}
   _ux_Helper: {fileID: 1839627050}
+  _imagePreviewCollection: {fileID: 1112097046}
   cardPanel: {fileID: 1824907367}
   cardPrefab: {fileID: 9040617090112358507, guid: bc9b6f7e23892644c8e177cd958c3178,
     type: 3}
+--- !u!114 &1112097046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1112097043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1f6f433784b1a947aa81efa3158db24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  images:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  imageIndex: 0
+  cardGrid: {fileID: 1824907367}
 --- !u!1 &1121943710
 GameObject:
   m_ObjectHideFlags: 0

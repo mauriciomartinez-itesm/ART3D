@@ -5,9 +5,10 @@ using UnityEngine.UI;
 
 public class CardController : MonoBehaviour
 {
-    public List<Card> cards = new List<Card>();
+    private List<Card> cards;
     public BundleManager _bundleManager;
     public UX_Helper _ux_Helper;
+    public ImagePreviewCollection _imagePreviewCollection;
     public GameObject cardPanel;
     public GameObject cardPrefab;
 
@@ -15,6 +16,7 @@ public class CardController : MonoBehaviour
 
     public void Start()
     {
+        cards = new List<Card>();
         _bundleManager.onIdsLoadingDone += OnIdsLoadingDoneHandler;
     }
 
@@ -28,7 +30,6 @@ public class CardController : MonoBehaviour
     {
         foreach (var element in assetsInfo)
         {
-
             GameObject NewCard = Instantiate(cardPrefab, transform.position, transform.rotation) as GameObject;
             NewCard.transform.SetParent(cardPanel.transform, false);
 
@@ -51,6 +52,11 @@ public class CardController : MonoBehaviour
                                                             // Conecta la accion onclick del boton de la carta al metodo
                                                             // OnCardClick.
             AddCardButtonListener( NewCard.GetComponent<Button>(), cards.Count - 1);
+
+            //if (cards.Count <= 10)
+            //{
+            _imagePreviewCollection.DownloadAndSetPreviewImage(element.Key);
+            //}
         }
     }
 
