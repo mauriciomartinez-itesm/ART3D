@@ -11,6 +11,9 @@ public class CardController : MonoBehaviour
     public ImagePreviewCollection _imagePreviewCollection;
     public GameObject cardPanel;
     public GameObject cardPrefab;
+    public Sprite favAct;
+    public Sprite Unfav;
+    public Button favorite;
 
     private bool filterByFavorite = false;
 
@@ -92,6 +95,12 @@ public class CardController : MonoBehaviour
     {
         Debug.Log("Set this card as fav: " + cards[cardIndex].assetBundleName);
         cards[cardIndex].isFavorite = !cards[cardIndex].isFavorite;
+
+        if (cards[cardIndex].isFavorite)
+            cards[cardIndex].cardGameObject.transform.GetChild(4).GetComponent<Button>().image.sprite = favAct;
+        else
+            cards[cardIndex].cardGameObject.transform.GetChild(4).GetComponent<Button>().image.sprite = Unfav;
+
     }
 
                                                             // La asignacion del onclick Listener debe realizarse dentro

@@ -3013,6 +3013,7 @@ RectTransform:
   - {fileID: 64903797}
   - {fileID: 406031328}
   - {fileID: 1325095341}
+  - {fileID: 738544823}
   m_Father: {fileID: 302709285}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3077,6 +3078,9 @@ MonoBehaviour:
   cardPanel: {fileID: 1824907367}
   cardPrefab: {fileID: 9040617090112358507, guid: bc9b6f7e23892644c8e177cd958c3178,
     type: 3}
+  favAct: {fileID: 21300000, guid: e4e2734e953cb0a48b3149aafb2b0996, type: 3}
+  Unfav: {fileID: 21300000, guid: 34e3c081a4ca8b74da7d6546924d4a18, type: 3}
+  favorite: {fileID: 1325095342}
 --- !u!114 &1112097046
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3192,85 +3196,6 @@ MonoBehaviour:
   - {fileID: 0}
   imageIndex: 0
   cardGrid: {fileID: 1824907367}
---- !u!1 &1121943710
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1121943711}
-  - component: {fileID: 1121943713}
-  - component: {fileID: 1121943712}
-  m_Layer: 5
-  m_Name: Text
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1121943711
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1121943710}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1325095341}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1121943712
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1121943710}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 14
-    m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 10
-    m_MaxSize: 40
-    m_Alignment: 4
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: Filtrar por favoritos
---- !u!222 &1121943713
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1121943710}
-  m_CullTransparentMesh: 0
 --- !u!1 &1219220161
 GameObject:
   m_ObjectHideFlags: 0
@@ -3542,15 +3467,14 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 3.2285, y: 3.2285, z: 3.2285}
-  m_Children:
-  - {fileID: 1121943711}
+  m_Children: []
   m_Father: {fileID: 980625911}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 251, y: 974}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: 428, y: 757}
+  m_SizeDelta: {x: 30, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1325095342
 MonoBehaviour:
@@ -3627,8 +3551,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 34e3c081a4ca8b74da7d6546924d4a18, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -4509,8 +4433,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2b29544581cbff48a74923442363fb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  requiredAngle: 0
-  requiredArc: -1
+  RequiredAngle: 0
+  RequiredArc: -1
   onFinger:
     m_PersistentCalls:
       m_Calls:
@@ -4526,9 +4450,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  modify: 0
-  coordinate: 0
-  multiplier: 1
+  Modify: 0
+  Coordinate: 0
+  Multiplier: 1
   onDelta:
     m_PersistentCalls:
       m_Calls: []
@@ -4555,9 +4479,9 @@ MonoBehaviour:
   onWorldFromTo:
     m_PersistentCalls:
       m_Calls: []
-  ignoreStartedOverGui: 1
-  ignoreIsOverGui: 0
-  requiredSelectable: {fileID: 1839627052}
+  IgnoreStartedOverGui: 1
+  IgnoreIsOverGui: 0
+  RequiredSelectable: {fileID: 0}
 --- !u!1 &1703718506
 GameObject:
   m_ObjectHideFlags: 0
@@ -5402,20 +5326,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83dcd8dace8b7fe449d796b980cb121d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selfSelected: 0
-  onSelected:
+  DeselectOnUp: 0
+  HideWithFinger: 0
+  IsolateSelectingFingers: 0
+  onSelect:
     m_PersistentCalls:
       m_Calls: []
-  onDeselected:
+  onSelectUpdate:
     m_PersistentCalls:
       m_Calls: []
-  use: 0
-  onSelectedFinger:
+  onSelectUp:
     m_PersistentCalls:
       m_Calls: []
-  onSelectedFingerUp:
+  onDeselect:
     m_PersistentCalls:
       m_Calls: []
+  isSelected: 0
 --- !u!114 &1839627053
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5440,19 +5366,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fc98219a83dff145947365dc914d06e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tapThreshold: 0.2
-  swipeThreshold: 100
-  referenceDpi: 200
-  guiLayers:
+  TapThreshold: 0.2
+  SwipeThreshold: 100
+  ReferenceDpi: 200
+  GuiLayers:
     serializedVersion: 2
     m_Bits: 32
-  useTouch: 1
-  useHover: 1
-  useMouse: 1
-  useSimulator: 1
-  recordFingers: 1
-  recordThreshold: 5
-  recordLimit: 10
+  RecordFingers: 1
+  RecordThreshold: 5
+  RecordLimit: 10
+  SimulateMultiFingers: 1
+  PinchTwistKey: 306
+  MovePivotKey: 308
+  MultiDragKey: 308
+  FingerTexture: {fileID: 0}
 --- !u!1 &1863778513
 GameObject:
   m_ObjectHideFlags: 0
