@@ -79,6 +79,10 @@ public class CardController : MonoBehaviour
     public void AddFavoriteButtonListener(Button favBtn, int cardIndex)
     {
         favBtn.onClick.AddListener(delegate { SetAsFavorite(cardIndex); });
+        Debug.Log(favBtn);
+       
+       
+        
     }
 
                                                             // Esta funcion se ejecuta cuando se presiona el boton de favorito
@@ -111,18 +115,27 @@ public class CardController : MonoBehaviour
         Debug.Log("Se presiono la carta con ID: " + id);
         _bundleManager.AsyncAddAssetBundle(id);
         _bundleManager.SetCanSpawnModel(true);
+        _ux_Helper.CollectionView.SetActive(false);
     }
 
                                                             // Es llamado al dar click en el boton de filtrar por 
                                                             // favorito.
     public void FilterByFavorite()
     {
+        filterByFavorite = !filterByFavorite;
+        FilterCards();
+
+        if (filterByFavorite) {
+            filterByFavorite = true;
+            favorite.image.sprite = favAct;
+        }
+        else
+        {
+            favorite.image.sprite = Unfav;
+        }
         Debug.Log("Filtrando por favs");
                                                             // Vuelve al boton un toggle button que puede prender y
                                                             // apagar el filtrado por favoritos,.
-        filterByFavorite = !filterByFavorite;
-
-        FilterCards();
     }
 
                                                             // Realiza el filtrado tomando en cuenta todos los filtros

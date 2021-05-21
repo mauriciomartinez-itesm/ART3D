@@ -60,21 +60,9 @@ public class UX_Helper : MonoBehaviour
         {
             activate = false;
             
-            MainDock.SetActive(false);
-            ActionDock.SetActive(true);
-            CollectionView.SetActive(true);
-            //crea las cards
-
-            //foreach (var element in assetsInfo)
-            //{
-
-            //    GameObject NewCard = Instantiate(CardPrefab, transform.position, transform.rotation) as GameObject;
-            //    NewCard.transform.SetParent(GameObject.FindGameObjectWithTag("Cardpanel").transform, false);
-
-            //    NewCard.transform.name = element.Key;
-            //    NewCard.transform.GetChild(2).GetComponent<Text>().text = element.Value.name;
-            //    //NewCard.transform.GetChild(1).GetComponent<Text>().text = element.Value.;
-            //}
+            MainDock.SetActive(true);
+            ActionDock.SetActive(false);
+            CollectionView.SetActive(activate);
             
 
         }
@@ -82,9 +70,9 @@ public class UX_Helper : MonoBehaviour
         {
             activate = true;
             
-            CollectionView.SetActive(false);
-            ActionDock.SetActive(false);
-            MainDock.SetActive(true);
+            CollectionView.SetActive(activate);
+            ActionDock.SetActive(true);
+            MainDock.SetActive(false);
            
         }
 
@@ -119,44 +107,15 @@ public class UX_Helper : MonoBehaviour
         Debug.Log(Console.transform.position.y);
     }
 
-    public void CloseConsole()
-    {
-        ActionDock.SetActive(false);
-        MainDock.SetActive(true);
-
-        Vector3 pos = transform.position;
-        pos.y = -1090;
-        LeanTween.moveY(Console, pos.y, 1f).setEaseOutSine();
-
-
-    }
-
-    public void CollectionClick()
-    {
-        if (click)
-        {
-            click = true;
-            Debug.Log("click listener on");
-        }
-        else
-        {
-            click = false;
-            Debug.Log("click listener off");
-
-        }
-    }
-
-   
+  
 
     private void Start()
     {
-        ShowDock();
+
         MainDock.SetActive(true);
         ActionDock.SetActive(false);
         OptionsView.SetActive(false);
         CollectionView.SetActive(false);
-
-        CollectionBtn.onClick.AddListener(CollectionClick);
     }
     //Dock Behavior
 
