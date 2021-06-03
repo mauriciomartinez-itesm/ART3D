@@ -25,7 +25,7 @@ public class PrefabBundle : MonoBehaviour
     public GameObject modelContainer = null;
     public GameObject model = null;
     public string id = "";
-            
+
                                                             // modelUpperBounds y modelLowerBounds son utilizados para
                                                             // escalar el modelo para que todos los modelos tengan la misma
                                                             // altura. modelUpperBounds contiene los limites superiores X, Y, Z 
@@ -46,15 +46,6 @@ public class PrefabBundle : MonoBehaviour
         numberOfModelsInAssetBundle = assetBundle.GetAllAssetNames().Length;
         parts = new List<Tuple<string, GameObject>>();
 
-                                                            // Se utiliza un modelContainer para poder mover el modelo (su hijo)
-                                                            // para que paresca que esta posicionado pegado al suelo.
-                                                            // La posicion del pivote del modelo no afecta en el escalamiento
-                                                            // porque se toma en cuenta el pivote del modelContainer permitiendo un
-                                                            // escalamiento correcto a la hora de usar el LeanPinchScale.
-        //if( modelContainer == null )
-        //{
-        //    CreateModelContainer();
-        //}
 
         model_index = (model_index + 1) >= (numberOfModelsInAssetBundle) ? model_index : model_index + 1;
 
@@ -156,11 +147,12 @@ public class PrefabBundle : MonoBehaviour
             model.transform.localScale = new Vector3(newScale, newScale, newScale);
             
 
-                                                            // Posiciona el objeto como si estuviera apoyado en la mesa sin importar
-                                                            // la posicion original.
-            Vector3 positionHelper = model.transform.localPosition;
-            positionHelper.y += modelLowerBounds.y * -1 * newScale;
+                                                            // Posiciona el centro del objeto en el pivote de giro,
+                                                            // que es la posicion del modelContainer.
+            Vector3 positionHelper = model.transform.localPosition;                                 
+            positionHelper.y -= (modelLowerBounds.y + (modelUpperBounds.y - modelLowerBounds.y) /2) * newScale;
             model.transform.localPosition = positionHelper;
+
 
             return true;
         }

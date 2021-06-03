@@ -12,7 +12,6 @@ using UnityEngine.UI;
 public class ModelManager : MonoBehaviour
 {
     public BundleManager _bundleManager;
-
     public ModelSpawner _modelSpawner;
     public Eraser _eraser;
     public Text debuglog;
@@ -144,11 +143,12 @@ public class ModelManager : MonoBehaviour
     }
 
                                                             // Si el assetbundle que se desea desplegar si esta cargado en
-                                                            // la cache entonces se muestra como hijo del prefabBundleGameObject.
-                                                            // Si el assetbundle no existe entonces se destruye el 
-                                                            // prefabBundleGameObject para evitar tener objetos vacios. Si todo
-                                                            // sale bien, el prefabBundleGameObject que contiene el modelo es
-                                                            // enfocado e inicializado para subscribirse al evento onModelClick.
+                                                            // la cache entonces se muestra dentro del prefabBundleGameObject.
+                                                            // Si el assetbundle no existe entonces se termina el metodo dejando al
+                                                            // prefabBundleGameObject con la animacion de loading. En la clase 
+                                                            // BundleController, cuando se termina de cargar el assetbundle se 
+                                                            // manda a llamar DisplayAssetBundleInPendingPrefabBundles. De esta
+                                                            // manera los modelos que quedaron en la etapa de loading se despliegan.
     public IEnumerator DisplayAssetBundleInPrefabBundle(GameObject prefabBundleGameObject, string id)
     {
         PrefabBundle _prefabBundle = prefabBundleGameObject.GetComponent<PrefabBundle>();
@@ -157,7 +157,6 @@ public class ModelManager : MonoBehaviour
         if (assetBundle == null)
         {
             Debug.Log("Null assetBundle");
-            //Destroy(prefabBundleGameObject);
             yield break;
         }
 

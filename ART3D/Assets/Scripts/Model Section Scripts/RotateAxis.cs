@@ -18,7 +18,8 @@ public class RotateAxis : MonoBehaviour
 	public Space Space = Space.Self;
 
 	private float lastPositionX = -1.0f;
-    private float sensibility = 0.5f;
+	private float lastPositionY = -1.0f;
+	private float sensibility = 0.5f;
 
     public void Update()
     {
@@ -27,18 +28,29 @@ public class RotateAxis : MonoBehaviour
 															// coordenada del frame pasado del dedo horizontalmente.
 		if (lastPositionX != -1.0f && Input.GetMouseButton(0) && Input.touchCount <= 1)
 		{
-			var twistDegrees = (Input.mousePosition.x - lastPositionX) * sensibility;
+			var twistDegreesX = (Input.mousePosition.x - lastPositionX) * sensibility;
+			var twistDegreesY = (Input.mousePosition.y - lastPositionY) * sensibility;
 
 															// Realiza la rotacion.
-			transform.Rotate(Axis, twistDegrees, Space);
+			if(Mathf.Abs(twistDegreesX) > Mathf.Abs(twistDegreesY) )
+				transform.Rotate(Vector3.down, twistDegreesX, Space);
+			else
+				transform.Rotate(Vector3.right, twistDegreesY, Space);
 			lastPositionX = Input.mousePosition.x;
+			lastPositionY = Input.mousePosition.y;
 		}
 
 															// Solo se realiza la rotacion si el usuario esta usando 1 solo dedo.
 		if (Input.GetMouseButton(0) && Input.touchCount <= 1)
+        {
 			lastPositionX = Input.mousePosition.x;
+			lastPositionY = Input.mousePosition.y;
+		}
 		else
+        {
 			lastPositionX = -1;
+			lastPositionY = -1;
+		}
 	}
 
 

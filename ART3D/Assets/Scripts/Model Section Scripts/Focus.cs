@@ -13,7 +13,7 @@ using UnityEngine;
 
 public class Focus : MonoBehaviour
 {
-
+    public bool shouldHideBottomMarker = false;
     private GameObject focusedGameObject=null;
     private int childIndexMarkers = 0;
     private int childIndexModel = 1;
@@ -23,7 +23,7 @@ public class Focus : MonoBehaviour
         return focusedGameObject;
     }
 
-    public void FocusObject( GameObject gameObjectToFocus )
+    public void FocusObject( GameObject gameObjectToFocus)
     {
         Debug.Log("Is focused game object == null ? " + (focusedGameObject == null).ToString() );
 
@@ -79,6 +79,12 @@ public class Focus : MonoBehaviour
 
                                                             // Hace aparecer los iconos de enfoque
         focusedGameObject.transform.GetChild(childIndexMarkers).gameObject.SetActive(true);
+
+                                                            // Si estamos en la vista del modelo sin AR entpnces
+                                                            // no se desea usar el marcador inferior entonces se
+                                                            // deshabilita.
+        if (shouldHideBottomMarker)
+            focusedGameObject.transform.GetChild(childIndexMarkers).GetChild(0).gameObject.SetActive(false);
 
     }
 }
