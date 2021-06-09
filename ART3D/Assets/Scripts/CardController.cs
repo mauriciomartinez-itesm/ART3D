@@ -172,6 +172,7 @@ public class CardController : MonoBehaviour
 
     public void FilterByAssetBundleName()
     {
+        FilterByFavorite();
         FilterCards();
     }
 

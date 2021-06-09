@@ -121,7 +121,15 @@ public class PrefabBundle : MonoBehaviour
             var prefab = assetBundle.LoadAsset(assetName);
 
             DeleteAssetGameObject();
-            
+
+                                                            // La rotacion del modelContainer se vuelve 0 para poder posicionar
+                                                            // el modelo en el estado default. Es necesario instanciar los modelos
+                                                            // con rotacion 0 para que el centrado del modelo se haga correctamente.
+                                                            // Se guarda la rotacion original para poderla reestablecer despues de 
+                                                            // haber instanciado y posicionado el modelo.
+            Quaternion originalModelContainerRotation = modelContainer.transform.rotation;
+            modelContainer.transform.eulerAngles = Vector3.zero;
+
             model = (GameObject)Instantiate(prefab, modelContainer.transform.position, modelContainer.transform.rotation, modelContainer.transform);
 
             model.AddComponent<OnModelClick>();
@@ -153,6 +161,7 @@ public class PrefabBundle : MonoBehaviour
             positionHelper.y -= (modelLowerBounds.y + (modelUpperBounds.y - modelLowerBounds.y) /2) * newScale;
             model.transform.localPosition = positionHelper;
 
+            modelContainer.transform.rotation = originalModelContainerRotation;
 
             return true;
         }
@@ -164,17 +173,6 @@ public class PrefabBundle : MonoBehaviour
     }
 
 
-    //private void CreateModelContainer()
-    //{
-    //    modelContainer = new GameObject("modelContainer");
-    //    modelContainer.transform.parent = this.transform;
-    //    modelContainer.transform.localPosition = new Vector3(0,0,0);
-    //    modelContainer.transform.localScale = new Vector3(1, 1, 1);
-
-
-    //    modelContainer.AddComponent<RotateAxis>();
-    //    modelContainer.AddComponent<LeanPinchScale>();
-    //}
 
                                                             // Recorre todo el modelo en busca de Meshes que cataloga como
                                                             // partes que va guardando en el diccionario 'parts'. Aprovechando

@@ -30,7 +30,6 @@ public class BundleLoader : MonoBehaviour
     public event onAssetBundleFinishLoadHandler onAssetBundleFinishLoad;
     public Text debuglog;
 
-    private string firebaseBasePath = "gs://art3d-e7c95.appspot.com/assetbundle/android/";
     private Dictionary<string, AssetBundle> myAssetBundles;
     private Queue<string> assetBundleIdRegistry;
     private int maxCacheAssetBundlesCount = 2;
@@ -38,6 +37,12 @@ public class BundleLoader : MonoBehaviour
     private string currentId = ""; 
     private string lastId = "";
 
+
+    #if UNITY_ANDROID
+        private string firebaseBasePath = "gs://art3d-e7c95.appspot.com/assetbundle/android/";
+    #elif UNITY_IOS
+        private string firebaseBasePath = "gs://art3d-e7c95.appspot.com/assetbundle/ios/";
+    #endif
 
     public void InitBundleLoader()
     {
