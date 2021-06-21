@@ -59,45 +59,45 @@ public class UX_Helper : MonoBehaviour
         if (activate)
         {
             activate = false;
-            
+
             MainDock.SetActive(true);
             ActionDock.SetActive(false);
             CollectionView.SetActive(activate);
-            
+
 
         }
         else
         {
             activate = true;
-            
+
             CollectionView.SetActive(activate);
-            ActionDock.SetActive(true);
-            MainDock.SetActive(false);
-           
+
+
         }
 
-        
+
     }
 
-    public void ShowOptions() 
+    public void ShowOptions()
     {
         if (showing)
         {
             showing = false;
             Debug.Log("Option menu off");
-            OptionsView.SetActive(showing);    
+            OptionsView.SetActive(showing);
+            MainDock.SetActive(true);
         }
         else
         {
             showing = true;
             Debug.Log("option menu on");
-            MainDock.SetActive(true);
+            MainDock.SetActive(false);
             OptionsView.SetActive(showing);
         }
     }
 
-  
-   
+
+
     public void ConsoleMenu()
     {
         ActionDock.SetActive(true);
@@ -107,7 +107,7 @@ public class UX_Helper : MonoBehaviour
         Debug.Log(Console.transform.position.y);
     }
 
-  
+
 
     private void Start()
     {
@@ -118,6 +118,9 @@ public class UX_Helper : MonoBehaviour
         CollectionView.SetActive(false);
     }
     //Dock Behavior
+    public void ActiveAR(){
+
+}
 
     private void Update()
     {

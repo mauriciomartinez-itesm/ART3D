@@ -8,9 +8,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Main_Page.unity
     guid: 34bfc69daae4d4d129dbd32b13d274d8
-  - enabled: 0
-    path: Assets/Scenes/GregScene.unity
-    guid: fb4fba112fa63e041ad850b135f03154
+  - enabled: 1
+    path: Assets/Gallery_Page.unity
+    guid: 23622ff8eb80d084e8fe9cf90f668ba3
   m_configObjects:
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: d065e6f6d5a35e647b0a0c8348993d72,
       type: 2}

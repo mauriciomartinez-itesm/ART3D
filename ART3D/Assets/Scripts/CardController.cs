@@ -10,8 +10,7 @@ public class CardController : MonoBehaviour
     public UX_Helper _ux_Helper;
     public GameObject cardPanel;
     public GameObject cardPrefab;
-    public Sprite favAct;
-    public Sprite Unfav;
+
 
     public Button favorite;
 
@@ -88,11 +87,22 @@ public class CardController : MonoBehaviour
                                                             // parametro cardIndex.
     public void SetAsFavorite(int cardIndex)
     {
+        var favAct = Resources.Load<Sprite>("Sprites/activeheart");
+        var Unfav = Resources.Load<Sprite>("Sprites/heartBtn");
+
         Debug.Log("Set this card as fav: " + cards[cardIndex].assetBundleName);
         cards[cardIndex].isFavorite = !cards[cardIndex].isFavorite;
 
-        
-        
+        if (cards[cardIndex].isFavorite)
+        {
+            cards[cardIndex].cardGameObject.transform.GetChild(4).GetComponent<Button>().image.sprite = favAct;
+        }
+        else
+        {
+            cards[cardIndex].cardGameObject.transform.GetChild(4).GetComponent<Button>().image.sprite = Unfav;
+        }
+
+
     }
 
                                                             // La asignacion del onclick Listener debe realizarse dentro
@@ -117,12 +127,17 @@ public class CardController : MonoBehaviour
         _bundleManager.AsyncAddAssetBundle(id);
         _bundleManager.SetCanSpawnModel(true);
         _ux_Helper.CollectionView.SetActive(false);
+        _ux_Helper.MainDock.SetActive(false);
+        _ux_Helper.ActionDock.SetActive(true);
     }
 
                                                             // Es llamado al dar click en el boton de filtrar por 
                                                             // favorito.
     public void FilterByFavorite()
     {
+        var favAct = Resources.Load<Sprite>("Sprites/activeheart");
+        var Unfav = Resources.Load<Sprite>("Sprites/heartBtn");
+
         filterByFavorite = !filterByFavorite;
         FilterCards();
 
