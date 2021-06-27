@@ -87,8 +87,8 @@ public class CardController : MonoBehaviour
                                                             // parametro cardIndex.
     public void SetAsFavorite(int cardIndex)
     {
-        var favAct = Resources.Load<Sprite>("Sprites/activeheart");
-        var Unfav = Resources.Load<Sprite>("Sprites/heartBtn");
+        var favAct = Resources.Load<Sprite>("Sprites/favbtnOs");
+        var Unfav = Resources.Load<Sprite>("Sprites/heartfav"); 
 
         Debug.Log("Set this card as fav: " + cards[cardIndex].assetBundleName);
         cards[cardIndex].isFavorite = !cards[cardIndex].isFavorite;
@@ -135,8 +135,8 @@ public class CardController : MonoBehaviour
                                                             // favorito.
     public void FilterByFavorite()
     {
-        var favAct = Resources.Load<Sprite>("Sprites/activeheart");
-        var Unfav = Resources.Load<Sprite>("Sprites/heartBtn");
+        var favAct = Resources.Load<Sprite>("Sprites/favbtnOs");
+        var Unfav = Resources.Load<Sprite>("Sprites/favBtnO");
 
         filterByFavorite = !filterByFavorite;
         FilterCards();
