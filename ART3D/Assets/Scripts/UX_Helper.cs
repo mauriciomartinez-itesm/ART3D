@@ -4,9 +4,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UX_Helper : MonoBehaviour
 {
+
     private bool state = false;
     private bool activate = false;
     private bool visible = false;
@@ -29,6 +31,8 @@ public class UX_Helper : MonoBehaviour
     public GameObject CollectionView;
     //seccion de prefabs
     public GameObject CardPrefab;
+
+    public Button ARbtn;
 
     //Muestra el Dock (Barra inferior con acciones)
     public void ShowDock()
@@ -111,19 +115,23 @@ public class UX_Helper : MonoBehaviour
 
     private void Start()
     {
-
         MainDock.SetActive(true);
         ActionDock.SetActive(false);
         OptionsView.SetActive(false);
         CollectionView.SetActive(false);
     }
     //Dock Behavior
-    public void ActiveAR(){
+    public void ActiveAR(string sceneName){
+     
 
-}
+        SceneManager.LoadScene(sceneName);
+        
+    }
 
     private void Update()
     {
        
     }
+
+
 }

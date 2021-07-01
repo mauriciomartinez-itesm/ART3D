@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,22 +10,28 @@ public class CardController : MonoBehaviour
     public List<Card> cards = new List<Card>();
     public BundleManager _bundleManager;
     public UX_Helper _ux_Helper;
+    public ImagePreviewCollection _imagePreviewCollection;
     public GameObject cardPanel;
     public GameObject cardPrefab;
-
-
     public Button favorite;
+    public InputField inputAssetBundleNameQuery;
+
+    public Button searchbtn;
 
     private bool filterByFavorite = false;
+    private bool filterByAssetBundle = false;
+    private HashSet<string> favoriteIdList = new HashSet<string>();
 
     public void Start()
     {
+        cards = new List<Card>();
         _bundleManager.onIdsLoadingDone += OnIdsLoadingDoneHandler;
+        favoriteIdList = SaveLoadData.data.favoriteIdList;
     }
 
     private void OnIdsLoadingDoneHandler(Dictionary<string, AssetInfo> assetsInfo)
     {
-        Debug.Log("Starting to add cards");
+        //Debug.Log("Starting to add cards");
         AddCards(assetsInfo);
     }
 
@@ -54,6 +62,18 @@ public class CardController : MonoBehaviour
                                                             // Conecta la accion onclick del boton de la carta al metodo
                                                             // OnCardClick.
             AddCardButtonListener( NewCard.GetComponent<Button>(), cards.Count - 1);
+
+            _imagePreviewCollection.DownloadAndSetPreviewImage(element.Key);
+
+            markAsFavoriteBasedOnSavedData(cards[cards.Count - 1]);
+
+        }
+    }
+    public void markAsFavoriteBasedOnSavedData(Card card)
+    {
+        if (favoriteIdList.Contains(card.cardGameObject.name))
+        {
+            SetAsFavorite(cards.IndexOf(card));
         }
     }
 
@@ -76,11 +96,12 @@ public class CardController : MonoBehaviour
     public void AddFavoriteButtonListener(Button favBtn, int cardIndex)
     {
         favBtn.onClick.AddListener(delegate { SetAsFavorite(cardIndex); });
-        Debug.Log(favBtn);
+       // Debug.Log(favBtn);
        
        
         
     }
+
 
                                                             // Esta funcion se ejecuta cuando se presiona el boton de favorito
                                                             // de cualquier carta. Para distinguir la carta se utiliza el 
@@ -101,7 +122,8 @@ public class CardController : MonoBehaviour
         {
             cards[cardIndex].cardGameObject.transform.GetChild(4).GetComponent<Button>().image.sprite = Unfav;
         }
-
+        SaveLoadData.stashFavoriteIdList(favoriteIdList);
+        SaveLoadData.SaveToFile();
 
     }
 
@@ -154,17 +176,75 @@ public class CardController : MonoBehaviour
                                                             // apagar el filtrado por favoritos,.
     }
 
-                                                            // Realiza el filtrado tomando en cuenta todos los filtros
-                                                            // al mismo timepo. Cuando ningun filtro esta activado, activa
-                                                            // todas las tarjetas.
+    public void FilterByAssetBundleName()
+    {
+        filterByAssetBundle = !filterByAssetBundle;
+        var search = Resources.Load<Sprite>("Sprites/searchbtn");
+        var clear = Resources.Load<Sprite>("Sprites/cleansearch");
+
+        if(filterByAssetBundle!= false)
+        {
+            searchbtn.image.sprite = clear;
+            FilterCards();
+        }
+        else
+        {
+            filterByAssetBundle = false;
+            searchbtn.image.sprite = search;
+            inputAssetBundleNameQuery.Select();
+            inputAssetBundleNameQuery.text = "";
+            FilterCards();
+
+        }
+        //FilterByFavorite();
+        
+    }
+
+    // Realiza el filtrado tomando en cuenta todos los filtros
+    // al mismo timepo. Cuando ningun filtro esta activado, activa
+    // todas las tarjetas.
     public void FilterCards()
     {
         foreach (var card in cards)
             if (card.cardGameObject != null)
             {
-                bool shouldShowCard = (!filterByFavorite | card.isFavorite);
-                card.cardGameObject.SetActive( shouldShowCard );
+                bool shouldShowCard = doesCardPassedAllFilters(card);
+                card.cardGameObject.SetActive(shouldShowCard);
             }
     }
 
+    public bool doesCardPassedAllFilters(Card card)
+    {
+        return doesCardPassedFavoriteFilter(card) &&
+                doesCardPassedAssetBundleNameFilter(card);
+    }
+
+    public bool doesCardPassedFavoriteFilter(Card card)
+    {
+        return (!filterByFavorite | card.isFavorite);
+    }
+
+    public bool doesCardPassedAssetBundleNameFilter(Card card)
+    {
+        string assetBundleName = RemoveAccents(card.assetBundleName.Trim().ToLower());
+        string assetBundleNameQuery = RemoveAccents(inputAssetBundleNameQuery.text.Trim().ToLower());
+
+        if (assetBundleNameQuery == "")
+            return true;
+
+        return assetBundleName.IndexOf(assetBundleNameQuery) > -1;
+    }
+
+
+    public string RemoveAccents(string text)
+    {
+        StringBuilder sbReturn = new StringBuilder();
+        var arrayText = text.Normalize(NormalizationForm.FormD).ToCharArray();
+        foreach (char letter in arrayText)
+        {
+            if (CharUnicodeInfo.GetUnicodeCategory(letter) != UnicodeCategory.NonSpacingMark)
+                sbReturn.Append(letter);
+        }
+        return sbReturn.ToString();
+    }
 }
